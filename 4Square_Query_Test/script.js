@@ -28,16 +28,17 @@ subBtn.on("click", function(event){
     }).then(function(response2){
         venDetails = response2.response.venue;
         console.log(venDetails);
-        for(var k=0; k<response2.length; k++){
+        console.log(response2.response.length);
+
             var restyDiv = $("<div class='col-8 bg-warning d-flex>");
-                restyDiv.addClass("id", venDetails[k].id)
-                var nameP = $("<p>").text(venDetails[k].name);
-                var priceP = $("<p>").text(venDetails[k].price.message);
-                var hoursP = ("<p>").text(venDetails[k].hours.status);
+                restyDiv.addClass("id", venDetails.id)
+                var nameP = $("<p>").text(venDetails.name);
+                // var priceP = $("<p>").text(venDetails.price.message);
+                var hoursP = ("<p>").text(venDetails.hours.status);
             
-            restyDiv.append(nameP, priceP, hoursP);
+            restyDiv.append(nameP, hoursP);
             $("#results-col").append(restyDiv);
-        }
+        
     });
   }; 
   })
