@@ -10,3 +10,7 @@
   display: table;
   overflow: auto;
 }
+
+#nom-col{
+  min-height: 350px;
+}
