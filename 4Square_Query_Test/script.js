@@ -23,7 +23,8 @@ subBtn.on("click", function(event){
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
-        url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
+        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
+        url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
         
         dataType: 'json',
         
@@ -44,14 +45,17 @@ subBtn.on("click", function(event){
         $.ajax({
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&', //andrewwilk1990
-            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&', //
+            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
+            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
+             url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
            
             dataType: 'json',
     }).then(function(response2){
         venDetails = response2.response.venue;
         console.log(venDetails);
-        console.log(venDetails.location.address);
+        console.log(venDetails.location.lat);
+        var geoLat = venDetails.location.lat
+        var geoLong = venDetails.location.lng
 
             var restyDiv = $("<div class='col-4 m-4 mx-auto bg-warning justify-content-center p-2 d-flex venue-choice'>");
                 restyDiv.attr("id", venDetails.id)
@@ -60,6 +64,8 @@ subBtn.on("click", function(event){
                         restyDiv.attr("venue-name", venDetails.name);
                         restyDiv.attr("venue-price", venDetails.price.message);
                         restyDiv.attr("venue-loc", venDetails.location.address);
+                        restyDiv.attr("geo-lat", geoLat);
+                        restyDiv.attr("geo-lng", geoLong);
 
                 var nameP = $("<p>").text(venDetails.name);
                 var priceP = $("<p class='ml-3'>").text(venDetails.price.message);
@@ -80,13 +86,17 @@ $(document).on("click", ".venue-choice", function(){
     var priceSelected = $(this).attr('venue-price');
     var locSelected = $(this).attr('venue-loc');
     var squareUrl = $(this).attr('square-url');
+    var geoLat = $(this).attr('geo-lat');
+    var geoLong = $(this).attr('geo-lng');
 
     database.ref('nominations').push({
         id: selected,
         name: nameSelected,
         price: priceSelected,
         location: locSelected,
-        url: squareUrl
+        url: squareUrl,
+        lat: geoLat,
+        long: geoLong
     });
 
 
@@ -101,10 +111,14 @@ database.ref('nominations').on("child_added", function(snapshot) {
     var nomDiv = $("<div class='col m-4 mx-auto bg-warning text-center p-2 clear-fix nomination'>");
         nomDiv.attr("id", sv.id);
         nomDiv.attr("url", sv.url);
+        nomDiv.attr("geo-lat", sv.lat);
+        nomDiv.attr("geo-lng", sv.long)
     var nameP = $("<p>").text(sv.name);
     var priceP = $("<p class='ml-3'>").text(sv.price);
     var locP = $("<p class='ml-3'>").text(sv.location);
 
     nomDiv.append(nameP, priceP, locP);
     $("#nom-col").append(nomDiv);
+
+
 });
