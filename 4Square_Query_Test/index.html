@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+    <html lang="en-us">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+            <link rel="stylesheet" type= "text/css" href="style.css">
+            <title>MeetEat</title>
+            
+        </head>
+        <body>
+            <header></header>
+            <div class="container-fluid">
+                <div id="search-area" class="row">
+                    <div id="search-col" class="col-4 clearfix mx-auto mt-5">
+                            <form>
+                                <div class="form-group">
+                                      <label for="searchinput">Search Term</label>
+                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos">  
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+
+                    </div><!--search-col end-->
+                </div><!--search row end-->
+                <div id="nom-row" class="row">
+                    <div id="nom-col" class="col-4 bg-light mx-auto mt-3">
+
+                    </div><!--nom col end-->
+                    <div class="col-6 ml-auto">
+                        <iframe height="400" width="300" border="0" marginwidth="0" marginheight="0" src="https://www.mapquest.com/embed/us/pa/philadelphia-282039520?center=39.95106050000002,-75.16562039999998&zoom=12&maptype=undefined"></iframe>    
+                    </div><!--map col end-->
+                </div><!--nom row end-->
+                <div id="results-row" class="row">
+                    <div id="results-col" class="col-8 clearfix mx-auto mt-3">
+
+                    </div><!--results-col end-->
+                </div><!--results row end-->
+            </div><!--container end-->
+
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    <script src="script.js"></script>
+                          
+       </body>
+    </html>
