@@ -21,11 +21,11 @@ subBtn.on("click", function(event){
     var keyword = '&query=' + input.val();
     //first call asks API for a list of restuarants within given geoloc
     $.ajax({
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
+        url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
-        url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
+        // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
         
         dataType: 'json',
         
@@ -44,11 +44,11 @@ subBtn.on("click", function(event){
     //for each id in the venueid array, an ajax call is made for complete venue information, this info used to populate divs for each with venue-choice class connected to a click event
     for(var j = 0; j<venIdArray.length; j++){
         $.ajax({
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
+            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
-             url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
+            //  url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
            
             dataType: 'json',
     }).then(function(response2){
@@ -58,7 +58,7 @@ subBtn.on("click", function(event){
         var geoLat = venDetails.location.lat
         var geoLong = venDetails.location.lng
 
-            var restyDiv = $("<div class='col-4 m-4 mx-auto bg-warning justify-content-center p-2 d-flex venue-choice'>");
+            var restyDiv = $("<div class='col-4 m-2 bg-warning float-left text-center p-2 clearfix venue-choice'>");
                 restyDiv.attr("id", venDetails.id)
                     ///in addition to the 4SQid being made id for the restaurant bar, other information stored as attribute values so when repopulated elsewhere further AJAX calls are unnecessary
                         restyDiv.attr("square-url",venDetails.shortUrl)
@@ -69,8 +69,8 @@ subBtn.on("click", function(event){
                         restyDiv.attr("geo-lng", geoLong);
 
                 var nameP = $("<p>").text(venDetails.name);
-                var priceP = $("<p class='ml-3'>").text(venDetails.price.message);
-                var locP = $("<p class='ml-3'>").text(venDetails.location.address);
+                var priceP = $("<p class='m-3'>").text(venDetails.price.message);
+                var locP = $("<p class='m-3'>").text(venDetails.location.address);
             
             restyDiv.append(nameP, priceP, locP);
             $("#results-col").append(restyDiv);
@@ -104,7 +104,7 @@ $(document).on("click", ".venue-choice", function(){
 
 
 });
-
+///Takes firebase data, populates ballot, adds pin to map
 database.ref('nominations').on("child_added", function(snapshot) {
     var sv = snapshot.val();
     console.log(sv);
