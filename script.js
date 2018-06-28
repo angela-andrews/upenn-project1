@@ -30,7 +30,8 @@ function guid() {
 
 $(document).ready(function() {
     var userId = guid();
-
+    /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
+    
     database.ref('user').push({
         userId: userId
     });
