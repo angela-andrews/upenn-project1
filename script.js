@@ -17,7 +17,6 @@ var subBtn = $("button[type='submit']");
 var input = $("#search-input");
 
 ////////////////on page load, unique ID is generated for each page user, sent //////////////////////////////////////
-
 function guid() {
     function s4() {
       return Math.floor((1 + Math.random()) * 0x10000)
@@ -28,17 +27,17 @@ function guid() {
       s4() + "-" + s4() + s4() + s4();
   }
 
-$(document).ready(function() {
-    /////adds timestamp for uniqueId creation
-    var timeStamp = moment().format();
-    var userId = guid();
-    /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
-    
-    database.ref('user').push({
-        userId: userId,
-        timeJoined: timeStamp
+    $(document).ready(function() {
+        /////adds timestamp for uniqueId creation
+        var timeStamp = moment().format();
+        var userId = guid();
+        /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
+
+        database.ref('users').push({
+            userId: userId,
+            timeJoined: timeStamp
+        });
     });
-  });
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
@@ -137,7 +136,7 @@ $(document).on("click", ".venue-choice", function(){
 //////////////Takes firebase data, populates ballot, adds pin to map//////////////
 database.ref('nominations').on("child_added", function(snapshot) {
     var sv = snapshot.val();
-    console.log(sv);
+    // console.log(sv);
 
     var nomDiv = $("<div class='col m-4 mx-auto bg-warning text-center p-1 clear-fix nomination'>");
         nomDiv.attr("id", sv.id);
