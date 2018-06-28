@@ -16,8 +16,33 @@ var database = firebase.database();
 var subBtn = $("button[type='submit']");
 var input = $("#search-input");
 
+////////////////on page load, unique ID is generated for each page user, sent //////////////////////////////////////
+
+function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
+      s4() + "-" + s4() + s4() + s4();
+  }
+
+$(document).ready(function() {
+    var userId = guid();
+
+    database.ref('user').push({
+        userId: userId
+    });
+  });
+
+////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
     event.preventDefault();
+
+    ////empties results area with start of each search////
+
+    $("#results-col").empty();
     var keyword = '&query=' + input.val();
     //first call asks API for a list of restuarants within given geoloc
     $.ajax({
@@ -80,6 +105,7 @@ subBtn.on("click", function(event){
   });
 });
 
+//////////////function allowing 1 item from suggestion list to be 'chosen', sent to firebase database as a 'nomination'//////////////
 $(document).on("click", ".venue-choice", function(){
     console.log("click");
     var selected = $(this).attr("id");
@@ -104,7 +130,7 @@ $(document).on("click", ".venue-choice", function(){
 
 
 });
-///Takes firebase data, populates ballot, adds pin to map
+//////////////Takes firebase data, populates ballot, adds pin to map//////////////
 database.ref('nominations').on("child_added", function(snapshot) {
     var sv = snapshot.val();
     console.log(sv);
@@ -124,6 +150,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 });
 
+//////////////nominations are clicked, weighted voting occurs
 $(document).on("click", ".nomination", function(){
 
 
