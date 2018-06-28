@@ -4,10 +4,11 @@ var config = {
     authDomain: "q-test-app.firebaseapp.com",
     databaseURL: "https://q-test-app.firebaseio.com",
     projectId: "q-test-app",
-    storageBucket: "",
+    storageBucket: "q-test-app.appspot.com",
     messagingSenderId: "660859232414"
   };
   firebase.initializeApp(config);
+
 
   //////////////////////////////////////////////////////
 
