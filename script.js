@@ -29,11 +29,14 @@ function guid() {
   }
 
 $(document).ready(function() {
+    /////adds timestamp for uniqueId creation
+    var timeStamp = moment().format();
     var userId = guid();
     /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
     
     database.ref('user').push({
-        userId: userId
+        userId: userId,
+        timeJoined: timeStamp
     });
   });
 
