@@ -15,6 +15,8 @@ var config = {
 var database = firebase.database();
 var subBtn = $("button[type='submit']");
 var input = $("#search-input");
+//created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
+var userIdLocal = "";
 
 ////////////////on page load, unique ID is generated for each page user, sent //////////////////////////////////////
 function guid() {
@@ -32,7 +34,7 @@ function guid() {
         var timeStamp = moment().format();
         var userId = guid();
         /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
-
+        userIdLocal = userId;
         database.ref('users').push({
             userId: userId,
             timeJoined: timeStamp
