@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  /* text-align: center; */
+  /* background-color: green; */
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+  overflow: auto;
+}
+
+#nom-col{
+  min-height: 350px;
+}
