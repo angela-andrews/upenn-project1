@@ -122,3 +122,25 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 
 });
+
+$(document).on("click", ".nomination", function(){
+
+
+    console.log(this);
+    //create a var called selected ID this.attr(id)
+    var id = $(this).attr("id");
+    console.log(id);
+
+    //push to DB as a vote  ref.set()
+    firebase.database().ref('votes').push({
+        id: id,
+        score: 3
+    });
+
+
+//user gets to vote 3x
+//if user voteCount ===3, then g
+
+//if user voteCount ===3, break out the loop and push the array along with the UUID to the databas
+
+});
