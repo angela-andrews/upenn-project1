@@ -15,6 +15,8 @@ var config = {
 var database = firebase.database();
 var subBtn = $("button[type='submit']");
 var input = $("#search-input");
+
+
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
 var userIdLocal = "";
 
@@ -183,6 +185,13 @@ $(document).on("click", ".nomination", function(){
         score: 3
     });
 
+    //somehow, the vote tracker has to be set to 0 at the start of a session, and each time someone makes a vote 
+    //(regardless of whether its 1st/2nd/3rd) the tracker incrementalizes, until it reaches .info/connected.numChild()*3
+    
+    // firebase.database().ref('votesTrack').set({
+    //     totalVotes: totalVotes++
+    // })
+
 
 //user gets to vote 3x
 //if user voteCount ===3, then g
@@ -190,3 +199,27 @@ $(document).on("click", ".nomination", function(){
 //if user voteCount ===3, break out the loop and push the array along with the UUID to the databas
 
 });
+
+
+
+//////////////use connections to record when voting is complete
+
+var connectionsRef = database.ref("/connections");
+    // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
+
+    // When the client's connection state changes...
+    connectedRef.on("value", function(snap){
+        if(snap.val()){
+            var con = connectionsRef.push(true);
+            // Remove user from the connection list when they disconnect.
+            con.onDisconnect().remove();
+        }
+
+    });
+    connectionsRef.on("value", function(snap){
+
+        // The number of online users is the number of children in the connections list.
+        var usersCurrent = snap.numChildren();
+        console.log(usersCurrent);
+    });
