@@ -23,3 +23,7 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+.nom-card{
+  min-height: 200px;
+}
