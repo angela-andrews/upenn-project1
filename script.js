@@ -140,18 +140,24 @@ database.ref('nominations').on("child_added", function(snapshot) {
     var sv = snapshot.val();
     // console.log(sv);
 
-    var nomDiv = $("<div class='col m-4 mx-auto bg-warning text-center p-1 clear-fix nomination'>");
-        nomDiv.attr("id", sv.id);
-        nomDiv.attr("url", sv.url);
-        nomDiv.attr("geo-lat", sv.lat);
-        nomDiv.attr("geo-lng", sv.long)
-    var nameP = $("<p>").text(sv.name);
-    var priceP = $("<p class='m-2'>").text(sv.price);
-    var locP = $("<p class='m-2'>").text(sv.location);
+    // var nomDiv = $("<div class='col m-4 mx-auto bg-warning text-center p-1 clear-fix nomination'>");
+    
+    var newCard = $("<div class='card nomination mb-2'>");
+        newCard.attr("id", sv.id);
+        newCard.attr("url", sv.url);
+        newCard.attr("geo-lat", sv.lat);
+        newCard.attr("geo-lng", sv.long)
+    var cardHeader= $("<div class='card-header bg-warning text-center'>").text(sv.name);
+    var cardBody = $("<div class='card-body p-1 text-center'>");
+    var newBlock =$("<div class='blockquote mb-0'>");
+        var priceP = $("<p class='nomP text-secondary'>").text("Price: " + sv.price);
+        var locP  = $("<p class='nomP text-secondary'>").text(sv.location);
+    
+    newBlock.append(priceP, locP);
+    cardBody.append(newBlock);
+    newCard.append(cardHeader, cardBody);
 
-    nomDiv.append(nameP, priceP, locP);
-    $("#nom-col").append(nomDiv);
-
+    $("#nom-col").append(newCard);
 
 });
 
