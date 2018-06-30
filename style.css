@@ -18,3 +18,12 @@
 #map-col{
   min-height: 350px;
 }
+
+.nomP{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.nom-card{
+  min-height: 200px;
+}
