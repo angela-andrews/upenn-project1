@@ -15,7 +15,7 @@ var config = {
 var database = firebase.database();
 var subBtn = $("button[type='submit']");
 var input = $("#search-input");
-
+var voteCount = 1;
 
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
 var userIdLocal = "";
@@ -55,8 +55,8 @@ subBtn.on("click", function(event){
     $.ajax({
         // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
-        url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
+        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
+        url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
         // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
         
         dataType: 'json',
@@ -78,8 +78,8 @@ subBtn.on("click", function(event){
         $.ajax({
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
-            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
+            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
+            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
             //  url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
            
             dataType: 'json',
@@ -170,56 +170,94 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 });
 
+var voteCount = 1;
+var chosen = [];
+var item;
+
 //////////////nominations are clicked, weighted voting occurs
 $(document).on("click", ".nomination", function(){
-
-
-    console.log(this);
+    console.log("object clicked pre ifelse ", this);
     //create a var called selected ID this.attr(id)
     var id = $(this).attr("id");
-    console.log(id);
+    console.log("id preifelse ", id);
 
-    //push to DB as a vote  ref.set()
-    firebase.database().ref('votes').push({
-        id: id,
-        score: 3
-    });
+    if(voteCount <= 3){
+        var selectedId = $(this).attr("id");
+        console.log("selectedId, after votecount check ", selectedId);
 
-    //somehow, the vote tracker has to be set to 0 at the start of a session, and each time someone makes a vote 
-    //(regardless of whether its 1st/2nd/3rd) the tracker incrementalizes, until it reaches .info/connected.numChild()*3
-    
-    // firebase.database().ref('votesTrack').set({
-    //     totalVotes: totalVotes++
-    // })
+        if(chosen.indexOf(selectedId) !== -1){//it is in the array
+            // alert("Please make another selection");
+            console.log("this is already in the chosen array so nothing further happens");
+        }else{
+            //not in chosen array, so is a valid vote
+            chosen.push(selectedId);
+            console.log("the chosen array has been updated ", chosen);
 
+            //see if its in the database
 
-//user gets to vote 3x
-//if user voteCount ===3, then g
+            database.ref().once("value", function(snapshot) {
+                if(!snapshot.child('votes').exists()){
+                    console.log("votes determined to not exist, now created and first nomination and vote added");
+                    database.ref('votes').push({
+                        id: selectedId,
+                        score: 3
+                    });
+                }else{
+                    console.log("theres already one vote in the database, so we now check if this one has been nominated");
+                    console.log("this snapshot was grabbed after it was determined that 'votes' exists ", snapshot);
+                    var returnedArray = [];
+                    snapshot.child('votes').forEach(function(childSnap){
+                        console.log("getting each ID");
+                        console.log("this is the childsnap, the one taken to get all the database item ids ", childSnap);
+                        item = childSnap.val();
+                        item.key = childSnap.key;
 
-//if user voteCount ===3, break out the loop and push the array along with the UUID to the databas
+                        returnedArray.push(item);
+                        console.log("this is the array that we put ids into ", returnedArray);
+                        console.log("this is the length of the array ", returnedArray.length);
 
-});
+                        //here we see if the selected Id is in the database
+                        
+                    });//for each end
+                    var idsArray = [];
 
+                        for(var k = 0; k<returnedArray.length; k++){
+                            idsArray.push(returnedArray[k].id);
+                        }
 
-
+                        if(idsArray.indexOf(selectedId) === -1){
+                            console.log("it appears to this code that the ID isnt yet in the database, it will be added");
+                            database.ref('votes').push({
+                                id: id,
+                                score: 3
+                            });
+                        }else{
+                            console.log("the restaurant has already been added to the database, so we need to update the existing score");
+                        }
+                }//end of else that comes after it was determined that 'votes' exists
+            });
+        }//else end of chosen indexof check
+    }//voteCount super end
+});//doc on end
+        
 //////////////use connections to record when voting is complete
 
-var connectionsRef = database.ref("/connections");
-    // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-var connectedRef = database.ref(".info/connected");
+// var connectionsRef = database.ref("/connections");
+//     // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+// var connectedRef = database.ref(".info/connected");
 
-    // When the client's connection state changes...
-    connectedRef.on("value", function(snap){
-        if(snap.val()){
-            var con = connectionsRef.push(true);
-            // Remove user from the connection list when they disconnect.
-            con.onDisconnect().remove();
-        }
+//     // When the client's connection state changes...
+//     connectedRef.on("value", function(snap){
+//         if(snap.val()){
+//             var con = connectionsRef.push(true);
+//             // Remove user from the connection list when they disconnect.
+//             con.onDisconnect().remove();
+//         }
 
-    });
-    connectionsRef.on("value", function(snap){
+//     });
+//     connectionsRef.on("value", function(snap){
 
-        // The number of online users is the number of children in the connections list.
-        var usersCurrent = snap.numChildren();
-        console.log(usersCurrent);
-    });
+//         // The number of online users is the number of children in the connections list.
+//         var usersCurrent = snap.numChildren();
+//         console.log(usersCurrent);
+//     });
