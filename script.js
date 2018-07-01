@@ -15,7 +15,9 @@ var config = {
 var database = firebase.database();
 var subBtn = $("button[type='submit']");
 var input = $("#search-input");
-var voteCount = 1;
+var voteCount = 3;
+var chosen = [];
+var item;
 
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
 var userIdLocal = "";
@@ -170,9 +172,8 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 });
 
-var voteCount = 1;
-var chosen = [];
-var item;
+
+
 
 //////////////nominations are clicked, weighted voting occurs
 $(document).on("click", ".nomination", function(){
@@ -181,7 +182,7 @@ $(document).on("click", ".nomination", function(){
     var id = $(this).attr("id");
     console.log("id preifelse ", id);
 
-    if(voteCount <= 3){
+    if(voteCount > 0){
         var selectedId = $(this).attr("id");
         console.log("selectedId, after votecount check ", selectedId);
 
@@ -202,6 +203,7 @@ $(document).on("click", ".nomination", function(){
                         id: selectedId,
                         score: 3
                     });
+                    voteCount = voteCount-1;
                 }else{
                     console.log("theres already one vote in the database, so we now check if this one has been nominated");
                     console.log("this snapshot was grabbed after it was determined that 'votes' exists ", snapshot);
@@ -220,9 +222,14 @@ $(document).on("click", ".nomination", function(){
                         
                     });//for each end
                     var idsArray = [];
+                    var scoresArray = [];
 
                         for(var k = 0; k<returnedArray.length; k++){
                             idsArray.push(returnedArray[k].id);
+                        }
+
+                        for(var y = 0; y<returnedArray.length; y++){
+                            scoresArray.push(returnedArray[y].score);
                         }
 
                         if(idsArray.indexOf(selectedId) === -1){
@@ -232,11 +239,29 @@ $(document).on("click", ".nomination", function(){
                                 score: 3
                             });
                         }else{
-                            console.log("the restaurant has already been added to the database, so we need to update the existing score");
+                            //if the selected ID matches the id of one of the database entities, I need to take k, which will be the index of the 
+                            //database object to be updated, use returned arrays to get the firebase id of that object, and use set to update the changes
+                            console.log("we need to update but dont know how");
+                            if(idsArray.indexOf(selectedId)!== -1){
+                                var targetIndex = idsArray.indexOf(selectedId);
+                                    console.log("this is the index we're looking for ", targetIndex);
+                                var targetKey = returnedArray[targetIndex].key;
+                                    console.log("here's the database key to target ", targetKey);
+                                var pathToUpdate = targetKey + "/" + "score";
+                                var scoreToUpdate = returnedArray[targetIndex].score + voteCount;
+                                    console.log("This is the going to be the new score value", scoreToUpdate);
+                                database.ref('votes').child(pathToUpdate).set(scoreToUpdate);
+                            }
                         }
+                    voteCount = voteCount-1;
+                    console.log("the updated voteCount for this user is ", voteCount);
                 }//end of else that comes after it was determined that 'votes' exists
             });
+            
         }//else end of chosen indexof check
+        
+    }else{
+        console.log("user is out of votes");
     }//voteCount super end
 });//doc on end
         
