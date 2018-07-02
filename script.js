@@ -1,22 +1,14 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
-// var config = {
-//     apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-//     authDomain: "q-test-app.firebaseapp.com",
-//     databaseURL: "https://q-test-app.firebaseio.com",
-//     projectId: "q-test-app",
-//     storageBucket: "q-test-app.appspot.com",
-//     messagingSenderId: "660859232414"
-//   };
-//   firebase.initializeApp(config);
 var config = {
-    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
-    authDomain: "clickbutton-6f564.firebaseapp.com",
-    databaseURL: "https://clickbutton-6f564.firebaseio.com",
-    projectId: "clickbutton-6f564",
-    storageBucket: "clickbutton-6f564.appspot.com",
-    messagingSenderId: "178282862091"
+    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
+    authDomain: "q-test-app.firebaseapp.com",
+    databaseURL: "https://q-test-app.firebaseio.com",
+    projectId: "q-test-app",
+    storageBucket: "q-test-app.appspot.com",
+    messagingSenderId: "660859232414"
   };
   firebase.initializeApp(config);
+
 
   //////////////////////////////////////////////////////
 
