@@ -29,27 +29,27 @@ var userIdLocal = "";
 
 
 ////////////////on page load, unique ID is generated for each page user, sent //////////////////////////////////////
-function guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-      s4() + "-" + s4() + s4() + s4();
-  }
+// function guid() {
+//     function s4() {
+//       return Math.floor((1 + Math.random()) * 0x10000)
+//         .toString(16)
+//         .substring(1);
+//     }
+//     return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
+//       s4() + "-" + s4() + s4() + s4();
+//   }
 
-    $(document).ready(function() {
-        /////adds timestamp for uniqueId creation
-        var timeStamp = moment().format();
-        var userId = guid();
-        /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
-        userIdLocal = userId;
-        database.ref('users').push({
-            userId: userId,
-            timeJoined: timeStamp
-        });
-    });
+//     $(document).ready(function() {
+//         /////adds timestamp for uniqueId creation
+//         var timeStamp = moment().format();
+//         var userId = guid();
+//         /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
+//         userIdLocal = userId;
+//         database.ref('users').push({
+//             userId: userId,
+//             timeJoined: timeStamp
+//         });
+//     });
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
@@ -63,9 +63,9 @@ subBtn.on("click", function(event){
     $.ajax({
         // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
+        url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
-        url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
+        // url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
         
         dataType: 'json',
         
@@ -86,9 +86,9 @@ subBtn.on("click", function(event){
         $.ajax({
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
+            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
             // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
-             url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
+            //  url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
            
             dataType: 'json',
             ///this function takes the received restaurant information and creates cards for each suggestion containing that info and a nomination button
@@ -280,8 +280,9 @@ $(document).on("click", ".nomination", function(){
 
 
 //////////////When voting done, tallies up the vote//////////////
-    /////////For now, runs on tally button click/////////
+
     var completedArray = [];
+    ////watches votes completed counter, when equal to number of connections, runs tally function
     database.ref('votersFinished').on("child_added", function(snapshot) {
         var newComplete = snapshot.val();
 
@@ -344,22 +345,22 @@ $(document).on("click", ".nomination", function(){
 
 //////////////use connections to record when voting is complete
 
-var connectionsRef = database.ref("/connections");
-    // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-var connectedRef = database.ref(".info/connected");
+    var connectionsRef = database.ref("/connections");
+        // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+    var connectedRef = database.ref(".info/connected");
 
     // When the client's connection state changes...
     connectedRef.on("value", function(snap){
-        if(snap.val()){
-            var con = connectionsRef.push(true);
-            // Remove user from the connection list when they disconnect.
-            con.onDisconnect().remove();
-        }
+            if(snap.val()){
+                var con = connectionsRef.push(true);
+                // Remove user from the connection list when they disconnect.
+                con.onDisconnect().remove();
+            }
 
     });
     connectionsRef.on("value", function(snap){
 
-        // The number of online users is the number of children in the connections list.
-        usersCurrent = snap.numChildren();
-        console.log(usersCurrent);
+            // The number of online users is the number of children in the connections list.
+            usersCurrent = snap.numChildren();
+            console.log(usersCurrent);
     });
