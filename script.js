@@ -175,7 +175,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 
 
-//////////////nominations are clicked, weighted voting occurs
+//////////////nominations are clicked, weighted voting occurs//////////////
 $(document).on("click", ".nomination", function(){
     console.log("object clicked pre ifelse ", this);
     //create a var called selected ID this.attr(id)
@@ -263,7 +263,20 @@ $(document).on("click", ".nomination", function(){
     }else{
         console.log("user is out of votes");
     }//voteCount super end
-});//doc on end
+});//vote counting logic end
+
+
+
+//////////////When voting done, tallies up the vote//////////////
+//////////////For now, runs on tally button click//////////////
+
+
+
+
+
+
+
+
         
 //////////////use connections to record when voting is complete
 
