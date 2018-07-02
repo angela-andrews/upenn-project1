@@ -22,6 +22,8 @@ var compiledArray = [];
 var sortedArray = [];
 var winner = "";
 var transformedWinner = "";
+var usersCurrent = 0;
+
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
 var userIdLocal = "";
 
@@ -63,7 +65,7 @@ subBtn.on("click", function(event){
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
         // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
-        url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
+        url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
         
         dataType: 'json',
         
@@ -198,7 +200,7 @@ $(document).on("click", ".nomination", function(){
             //see if its in the database
 
             database.ref().once("value", function(snapshot) {
-                if(!snapshot.child('votes').exists()){
+                if(!snapshot.child('votes').exists() && voteCount === 3){
                     console.log("votes determined to not exist, now created and first nomination and vote added");
                     database.ref('votes').push({
                         id: selectedId,
@@ -237,7 +239,7 @@ $(document).on("click", ".nomination", function(){
                             console.log("it appears to this code that the ID isnt yet in the database, it will be added");
                             database.ref('votes').push({
                                 id: id,
-                                score: 3
+                                score: voteCount
                             });
                         }else{
                             //if the selected ID matches the id of one of the database entities, I need to take k, which will be the index of the 
@@ -256,6 +258,12 @@ $(document).on("click", ".nomination", function(){
                         }
                     voteCount = voteCount-1;
                     console.log("the updated voteCount for this user is ", voteCount);
+                    if(voteCount < 1){
+                        database.ref('votersFinished').push({
+                            votingComplete: true
+                        });
+
+                    }
                 }//end of else that comes after it was determined that 'votes' exists
             });
             
@@ -264,13 +272,30 @@ $(document).on("click", ".nomination", function(){
     }else{
         console.log("user is out of votes");
     }//voteCount super end
-});//vote counting logic end
 
+    //////////////Seeing if voting is complete//////////////
+    
+
+});//vote counting logic end
 
 
 //////////////When voting done, tallies up the vote//////////////
     /////////For now, runs on tally button click/////////
-$("#tally-btn").on("click", function(){
+    var completedArray = [];
+    database.ref('votersFinished').on("child_added", function(snapshot) {
+        var newComplete = snapshot.val();
+
+        completedArray.push(newComplete);
+        var howManyDone = completedArray.length;
+        console.log("users connected is", usersCurrent);
+        console.log("voters completed is", howManyDone);
+
+        if(usersCurrent === howManyDone){
+            tallyScore();
+        }
+    
+    });
+    function tallyScore(){
     
     /////////Get the values of the votes section and push them into an array to be sorted
     database.ref().once("value", function(snapshot){
@@ -315,36 +340,26 @@ $("#tally-btn").on("click", function(){
     });
 
     
-});
+};
 
-
-
-
-
-
-
-
-
-
-        
 //////////////use connections to record when voting is complete
 
-// var connectionsRef = database.ref("/connections");
-//     // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-// var connectedRef = database.ref(".info/connected");
+var connectionsRef = database.ref("/connections");
+    // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
 
-//     // When the client's connection state changes...
-//     connectedRef.on("value", function(snap){
-//         if(snap.val()){
-//             var con = connectionsRef.push(true);
-//             // Remove user from the connection list when they disconnect.
-//             con.onDisconnect().remove();
-//         }
+    // When the client's connection state changes...
+    connectedRef.on("value", function(snap){
+        if(snap.val()){
+            var con = connectionsRef.push(true);
+            // Remove user from the connection list when they disconnect.
+            con.onDisconnect().remove();
+        }
 
-//     });
-//     connectionsRef.on("value", function(snap){
+    });
+    connectionsRef.on("value", function(snap){
 
-//         // The number of online users is the number of children in the connections list.
-//         var usersCurrent = snap.numChildren();
-//         console.log(usersCurrent);
-//     });
+        // The number of online users is the number of children in the connections list.
+        usersCurrent = snap.numChildren();
+        console.log(usersCurrent);
+    });
