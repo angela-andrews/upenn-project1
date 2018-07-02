@@ -27,3 +27,8 @@
 .nom-card{
   min-height: 200px;
 }
+
+#friends{
+  background-color: #ffc107;
+  padding-left: 10px;
+}

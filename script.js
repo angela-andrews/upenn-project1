@@ -1,14 +1,22 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
+// var config = {
+//     apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
+//     authDomain: "q-test-app.firebaseapp.com",
+//     databaseURL: "https://q-test-app.firebaseio.com",
+//     projectId: "q-test-app",
+//     storageBucket: "q-test-app.appspot.com",
+//     messagingSenderId: "660859232414"
+//   };
+//   firebase.initializeApp(config);
 var config = {
-    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-    authDomain: "q-test-app.firebaseapp.com",
-    databaseURL: "https://q-test-app.firebaseio.com",
-    projectId: "q-test-app",
-    storageBucket: "q-test-app.appspot.com",
-    messagingSenderId: "660859232414"
+    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
+    authDomain: "clickbutton-6f564.firebaseapp.com",
+    databaseURL: "https://clickbutton-6f564.firebaseio.com",
+    projectId: "clickbutton-6f564",
+    storageBucket: "clickbutton-6f564.appspot.com",
+    messagingSenderId: "178282862091"
   };
   firebase.initializeApp(config);
-
 
   //////////////////////////////////////////////////////
 
@@ -25,31 +33,7 @@ var transformedWinner = "";
 var usersCurrent = 0;
 
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
-var userIdLocal = "";
 
-
-////////////////on page load, unique ID is generated for each page user, sent //////////////////////////////////////
-// function guid() {
-//     function s4() {
-//       return Math.floor((1 + Math.random()) * 0x10000)
-//         .toString(16)
-//         .substring(1);
-//     }
-//     return s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-//       s4() + "-" + s4() + s4() + s4();
-//   }
-
-//     $(document).ready(function() {
-//         /////adds timestamp for uniqueId creation
-//         var timeStamp = moment().format();
-//         var userId = guid();
-//         /////need to write logic to check in the database if this id is already present, and to take no action if it is present/////
-//         userIdLocal = userId;
-//         database.ref('users').push({
-//             userId: userId,
-//             timeJoined: timeStamp
-//         });
-//     });
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
@@ -362,5 +346,6 @@ $(document).on("click", ".nomination", function(){
 
             // The number of online users is the number of children in the connections list.
             usersCurrent = snap.numChildren();
+            $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
             console.log(usersCurrent);
     });
