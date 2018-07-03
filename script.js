@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-    authDomain: "q-test-app.firebaseapp.com",
-    databaseURL: "https://q-test-app.firebaseio.com",
-    projectId: "q-test-app",
-    storageBucket: "q-test-app.appspot.com",
-    messagingSenderId: "660859232414"
+    apiKey: "AIzaSyCOUal9HvDnZtCGAvwNi6l18K5nUX6cXkA",
+    authDomain: "seven-test-6f0ce.firebaseapp.com",
+    databaseURL: "https://seven-test-6f0ce.firebaseio.com",
+    projectId: "seven-test-6f0ce",
+    storageBucket: "seven-test-6f0ce.appspot.com",
+    messagingSenderId: "838213031113"
   };
   firebase.initializeApp(config);
 
@@ -13,7 +13,7 @@ var config = {
   //////////////////////////////////////////////////////
 
 var database = firebase.database();
-var subBtn = $("button[type='submit']");
+var subBtn = $("#search-sub-btn");
 var input = $("#search-input");
 var voteCount = 3;
 var chosen = [];
@@ -23,9 +23,15 @@ var sortedArray = [];
 var winner = "";
 var transformedWinner = "";
 var usersCurrent = 0;
+var clientId = "";
+var clientSecret = "";
 
-//created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
-
+//user must add credentials before search
+$("#cred-submit-btn").on("click", function(event){
+    event.preventDefault();
+        clientId = "client_id=" + $("#input-id").val();
+        clientSecret = "client_secret=" + $("#input-secret").val();
+})
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
@@ -37,12 +43,7 @@ subBtn.on("click", function(event){
     var keyword = '&query=' + input.val();
     //first call asks API for a list of restuarants within given geoloc
     $.ajax({
-        // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
-        url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
-        // url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
-        
+        url:'https://api.foursquare.com/v2/venues/search?limit=1&' + clientId + '&' + clientSecret +'&v=20130815&near=Philadelphia' + keyword, 
         dataType: 'json',
         
 }).then(function(response){
@@ -60,12 +61,7 @@ subBtn.on("click", function(event){
     //for each id in the venueid array, an ajax call is made for complete venue information, this info used to populate divs for each with venue-choice class connected to a click event
     for(var j = 0; j<venIdArray.length; j++){
         $.ajax({
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
-            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
-            //  url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
-           
+            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?' + clientId + '&' + clientSecret + '&v=20130815', 
             dataType: 'json',
             ///this function takes the received restaurant information and creates cards for each suggestion containing that info and a nomination button
     }).then(function(response2){
