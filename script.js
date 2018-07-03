@@ -12,19 +12,24 @@ var config = {
 
   //////////////////////////////////////////////////////
 
-var database = firebase.database();
-var subBtn = $("#search-sub-btn");
-var input = $("#search-input");
-var voteCount = 3;
-var chosen = [];
-var item;
-var compiledArray = [];
-var sortedArray = [];
-var winner = "";
-var transformedWinner = "";
-var usersCurrent = 0;
-var clientId = localStorage.getItem("storedId");
-var clientSecret = localStorage.getItem("storedSecret");
+    var database = firebase.database();
+    var subBtn = $("#search-sub-btn");
+    var input = $("#search-input");
+    var voteCount = 3;
+    var chosen = [];
+    var item;
+    var compiledArray = [];
+    var sortedArray = [];
+    var winner = "";
+    var transformedWinner = "";
+    var usersCurrent = 0;
+    var clientId = localStorage.getItem("storedId");
+    var clientSecret = localStorage.getItem("storedSecret");
+    var completedArray = [];
+
+
+//////////////////////////////////////////////////////
+
 
 // user must add credentials before search
 $(window).on("load", function(){
@@ -263,7 +268,7 @@ $(document).on("click", ".nomination", function(){
 
 //////////////When voting done, tallies up the vote//////////////
 
-    var completedArray = [];
+    
     ////watches votes completed counter, when equal to number of connections, runs tally function
     database.ref('votersFinished').on("child_added", function(snapshot) {
         var newComplete = snapshot.val();
@@ -322,8 +327,7 @@ $(document).on("click", ".nomination", function(){
 
     });
 
-    
-};
+    };
 
 //////////////use connections to record when voting is complete
 
@@ -346,4 +350,67 @@ $(document).on("click", ".nomination", function(){
             usersCurrent = snap.numChildren();
             $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
             console.log(usersCurrent);
+    });
+
+    //////////////This function resets neccessary html fields and clears the database///////////
+
+    $("#close-btn-within-winning-modal").on("click", function(){
+        database.ref('resetTrigger').push({
+            timeTo: "reset"
+        });
+        console.log("part 1");
+    })
+        ////clears resets local values, empties the firebase completely
+        function firstClear(){
+            console.log("part 2");
+            
+            $("#results-col").empty();
+            $("#nom-col").empty();
+            input.val("");
+            voteCount = 3;
+            chosen = [];
+            item = "";
+            compiledArray = [];
+            sortedArray = [];
+            completedArray = [];
+            winner = "";
+            transformedWinner = "";
+            $("#winning-display-col").empty();
+
+            database.ref().set({
+                is: "empty"
+            });
+            /////calls reset for users connected so can continue/////
+            setTimeout(resetConnections, 50);
+        }
+        ////after the database and local enivronment reset, this makes the connections list
+        ////back in the database so voting can begin again
+        function resetConnections(){
+            var connectionsRef = database.ref("/connections");
+            // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+            var connectedRef = database.ref(".info/connected");
+
+            // When the client's connection state changes...
+            connectedRef.on("value", function(snap){
+                    if(snap.val()){
+                        var con = connectionsRef.push(true);
+                        // Remove user from the connection list when they disconnect.
+                        con.onDisconnect().remove();
+                    }
+
+            });
+            connectionsRef.on("value", function(snap){
+
+                    // The number of online users is the number of children in the connections list.
+                    usersCurrent = snap.numChildren();
+                    $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
+                    console.log(usersCurrent);
+            });
+        }
+
+    //////////////looks for reset call////////////////////
+    database.ref('resetTrigger').on("child_added", function(snapshot) {
+        console.log("waiting for the sun");
+        
+            firstClear();
     });
