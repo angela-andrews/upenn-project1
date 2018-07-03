@@ -23,8 +23,8 @@ var sortedArray = [];
 var winner = "";
 var transformedWinner = "";
 var usersCurrent = 0;
-var clientId = "";
-var clientSecret = "";
+var clientId = localStorage.getItem("storedId");
+var clientSecret = localStorage.getItem("storedSecret");
 
 // user must add credentials before search
 $(window).on("load", function(){
@@ -33,9 +33,13 @@ $(window).on("load", function(){
 
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
-        clientId = "client_id=" + $("#modal-input-id").val();
-        clientSecret = "client_secret=" + $("#modal-input-secret").val();
-        $("#key-form").addClass("d-none");
+    var clientId = "client_id=" + $("#modal-input-id").val();
+    var clientSecret = "client_secret=" + $("#modal-input-secret").val();
+
+    localStorage.clear();
+    localStorage.setItem("storedId", clientId);
+    localStorage.setItem("storedSecret", clientSecret);
+       
 })
 
 
