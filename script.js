@@ -26,12 +26,18 @@ var usersCurrent = 0;
 var clientId = "";
 var clientSecret = "";
 
-//user must add credentials before search
+// user must add credentials before search
+$(window).on("load", function(){
+    $("#cred-modal").modal("show");
+});
+
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
-        clientId = "client_id=" + $("#input-id").val();
-        clientSecret = "client_secret=" + $("#input-secret").val();
+        clientId = "client_id=" + $("#modal-input-id").val();
+        clientSecret = "client_secret=" + $("#modal-input-secret").val();
+        $("#key-form").addClass("d-none");
 })
+
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 subBtn.on("click", function(event){
