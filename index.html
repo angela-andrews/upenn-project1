@@ -3,6 +3,11 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <!--jquery before Bootstrap for modal -->
+            <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
             <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
             <link rel="stylesheet" type= "text/css" href="style.css">
@@ -14,6 +19,40 @@
                 <div id="friends"><p>Friends connected: <span id="currentUsers"></span></p></div>
                 
             </header>
+            <!--Modal Noms In-->
+            <div class="modal" id="nomsIn">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <h2 class="modal-title">All the Nominations are in</h2>
+                            <button class="close" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="modal-body-text">Click on each restaurant to cast your vote on where you go for dinner. Time to <span class="eatmeet">EatMeet!</span></p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+            </div> <!--End modal container div-->
+            <!--end Modal Noms In-->
+
+              <!--Modal Winner-->
+              <div class="modal" id="winner">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                               <h2 class="modal-title">The Winner is....</h2>
+                                <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                            </div><!--End modal header-->
+                            <div class="modal-body">
+                                <p class="winner-name"> </p>
+                                <p class="winner-addr"> </p>
+                                <p class="winner-url"> </p>
+                            </div><!--End modal body-->
+                        </div><!--End modal content-->
+                    </div><!--End modal-dialog-->
+                </div> <!--End modal container div-->
+                <!--end Winner-->
+           
             <div class="container-fluid">
                 <div id="winning-display" class="row">
                     <div id="winning-display-col" class="col-12">
@@ -25,7 +64,7 @@
                             <form>
                                 <div class="form-group">
                                       <label for="searchinput">Search Term</label>
-                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos">  
+                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos" onfocus="this.value=''" >  
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -52,12 +91,21 @@
     <!-- firebase script -->
 
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+ 
     <!-- momentJS script -->
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+    
     <script src="script.js"></script>
                           
        </body>

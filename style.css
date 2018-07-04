@@ -29,6 +29,46 @@
 }
 
 #friends{
-  background-color: #ffc107;
+  background-color: #FDC02F;
   padding-left: 10px;
+}
+.modal-header{
+  background-color: #FDC02F;
+}
+.modal-title {
+  font-size: 1.2em;
+ }
+.modal-body-text{
+  font-size: 0.9em;
+}
+.eatmeet{
+  font-weight: 700;
+}
+.voteCount3{
+  background-color:#fdde94 ;
+  color: #fefdf9!important;
+  
+}
+.voteCount2{
+  background-color: #fdeabd;
+  color: #fefdf9!important;
+}
+.voteCount1{
+  background-color: #fefaef;
+  color: #fefdf9!important;
+}
+
+.winner-name{
+  font-size: 1.3em;
+  font-weight: bold;
+
+}
+.winner-addr{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.winner-url{
+  font-size: 1.1em;
+  font-weight: bold;
+  
 }

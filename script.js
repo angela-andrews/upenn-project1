@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-    authDomain: "q-test-app.firebaseapp.com",
-    databaseURL: "https://q-test-app.firebaseio.com",
-    projectId: "q-test-app",
-    storageBucket: "q-test-app.appspot.com",
-    messagingSenderId: "660859232414"
+    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
+    authDomain: "clickbutton-6f564.firebaseapp.com",
+    databaseURL: "https://clickbutton-6f564.firebaseio.com",
+    projectId: "clickbutton-6f564",
+    storageBucket: "clickbutton-6f564.appspot.com",
+    messagingSenderId: "178282862091"
   };
   firebase.initializeApp(config);
 
@@ -23,6 +23,12 @@ var sortedArray = [];
 var winner = "";
 var transformedWinner = "";
 var usersCurrent = 0;
+var nominationArray = [];
+
+////////modal hides///////
+$("#nomsIn").modal({ show: false});
+$("#winner").modal({ show: false});
+//////////////////////////
 
 //created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
 
@@ -125,8 +131,6 @@ $(document).on("click", ".nomBtn", function(event){
         lat: geoLat,
         long: geoLong
     });
-
-
 
 
 });
@@ -249,11 +253,8 @@ $(document).on("click", ".nomination", function(){
         console.log("user is out of votes");
     }//voteCount super end
 
-    //////////////Seeing if voting is complete//////////////
-    
-
+     
 });//vote counting logic end
-
 
 //////////////When voting done, tallies up the vote//////////////
 
@@ -272,6 +273,7 @@ $(document).on("click", ".nomination", function(){
         }
     
     });
+    
     function tallyScore(){
     
     /////////Get the values of the votes section and push them into an array to be sorted
@@ -300,25 +302,29 @@ $(document).on("click", ".nomination", function(){
             var winningLoc = transformedWinner.location;
             var winningUrl = transformedWinner.url;
 
-            var jumboDiv = $("<div class='jumbotron jumbotron-fluid'>");
-            var jumboContain = $("<div class='container'>");
-            var jumboHeader = $("<h1 class='display-4'>").text("You have chosen: ");
-            var jumboName = $("<h2>").text(winningName);
-            var jumboLoc = $("<h3>").text(winningLoc);
-            var jumboUrl = $("<h4>").text(winningUrl);
+            $(".winner-name").append(winningName);
+            $(".winner-addr").append(winningLoc);
+            var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>"
+            $(".winner-url").append(preurl);
 
-            jumboContain.append(jumboHeader, jumboName, jumboLoc, jumboUrl);
-            jumboDiv.append(jumboContain);
+            $("#winner").modal('show');
+            // var jumboDiv = $("<div class='jumbotron jumbotron-fluid'>");
+            // var jumboContain = $("<div class='container'>");
+            // var jumboHeader = $("<h1 class='display-4'>").text("You have chosen: ");
+            // var jumboName = $("<h2>").text(winningName);
+            // var jumboLoc = $("<h3>").text(winningLoc);
+            // var jumboUrl = $("<h4>").text(winningUrl);
 
-            $("#winning-display-col").append(jumboDiv);
+            // jumboContain.append(jumboHeader, jumboName, jumboLoc, jumboUrl);
+            // jumboDiv.append(jumboContain);
+
+            // $("#winning-display-col").append(jumboDiv);
             
         });
 
     });
-
-    
+   
 };
-
 //////////////use connections to record when voting is complete
 
     var connectionsRef = database.ref("/connections");
@@ -332,12 +338,67 @@ $(document).on("click", ".nomination", function(){
                 // Remove user from the connection list when they disconnect.
                 con.onDisconnect().remove();
             }
-
     });
     connectionsRef.on("value", function(snap){
 
             // The number of online users is the number of children in the connections list.
             usersCurrent = snap.numChildren();
             $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
-            console.log(usersCurrent);
+            console.log("Number of users connected: " + usersCurrent);
+        getUsersCurrent(usersCurrent);
+            
+           
     });
+   
+    function getUsersCurrent(num) {
+        //alert("is it out? " + num);
+        localStorage.setItem("usersCurrent", num);
+        return num;
+    }
+    //Nope, sets userCurrent to null
+    //usersCurrent=localStorage.getItem("usersCurrent");
+    
+     //////// A N G E L A --- nominations are over- time to vote modal /////////
+     database.ref('nominations').on("child_added", function(snapshot) {
+        var newNom = snapshot.val();
+
+        nominationArray.push(newNom);
+        var nomsIn = nominationArray.length;
+        console.log("users connected is", usersCurrent);
+        console.log("nominations in is", nomsIn);
+        usersCurrent=localStorage.getItem("usersCurrent");
+         if(usersCurrent == nomsIn){
+            $("#nomsIn").modal('show');
+        }
+    
+    });
+        
+    ////////////// as users are nominated/////////////////
+    $(document).on("click", ".nomination", function(){
+    ///here colors set arbitrarily, can either do it with bootstrap or add attr. corresponding to defined
+    ///classes or ids with color settings in css stylesheet for more customization
+    var clicked = $(this);
+    if(voteCount === 3){
+        clicked.addClass("voteCount3");
+    }
+    if(voteCount === 2){
+            clicked.addClass("voteCount2");
+    }
+    if(voteCount === 1){
+            clicked.addClass("voteCount1");
+    }
+});
+    
+    //////// end nominations are over time to vote modal /////////
+
+//1st modal - noms in , voting begis  # 22
+//after noms have been pushed, get a snaphot and compare # of connected
+// # of completedArray length === usersConnected
+// all noms are in  and voting should being
+//add anohter listner for the .nomination class
+// use the voteCount variable if ==3, 1 color 
+//if ==2 another color  if == some pale color
+
+
+// winner  (tallyscore())  #23
+
