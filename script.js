@@ -302,10 +302,10 @@ $(document).on("click", ".nomination", function(){
             var winningLoc = transformedWinner.location;
             var winningUrl = transformedWinner.url;
 
-            $(".winner-name").append(winningName);
+            //$(".winner-name").append(winningName);
             $(".winner-addr").append(winningLoc);
             var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>"
-            $(".winner-url").append(preurl);
+            $(".winner-name").append(preurl);
 
             $("#winner").modal('show');
             // var jumboDiv = $("<div class='jumbotron jumbotron-fluid'>");
