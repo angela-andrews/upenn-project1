@@ -335,32 +335,38 @@ $(document).on("click", ".nomination", function(){
             usersCurrent = snap.numChildren();
             $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
             console.log("Number of users connected: " + usersCurrent);
-        getUsersCurrent(usersCurrent);
+            //getUsersCurrent(usersCurrent);
             
            
     });
    
-    function getUsersCurrent(num) {
-        //hack to get the usersCurrent out of the function above
-        localStorage.clear();
-        localStorage.setItem("usersCurrent", num);
+    // function getUsersCurrent(num) {
+    //     //hack to get the usersCurrent out of the function above
+    //     console.log("User current from function above: " + usersCurrent);
+    //     localStorage.clear();
+    //     localStorage.setItem("usersCurrentLocal", num);
+    //     console.log("That num argument" + num);
+    // }
         
-    }
-    //Nope, sets userCurrent to null
-    //usersCurrent=localStorage.getItem("usersCurrent");
-    
      //////// A N G E L A --- nominations are over- time to vote modal /////////
      database.ref('nominations').on("child_added", function(snapshot) {
         var newNom = snapshot.val();
-
+        connectionsRef.on("value", function(snap){
+            usersCurrent = snap.numChildren();
+            console.log("User current from within the function: " + usersCurrent);
         nominationArray.push(newNom);
         var nomsIn = nominationArray.length;
         console.log("users connected is", usersCurrent);
         console.log("nominations in is", nomsIn);
-        usersCurrent=localStorage.getItem("usersCurrent");
-         if(usersCurrent == nomsIn){
-            $("#nomsIn").modal('show');
-        }
+        
+           
+            //usersCurrentLocal=localStorage.getItem("usersCurrentLocal");
+            if(usersCurrent === nomsIn){
+               $("#nomsIn").modal('show');
+           }
+        
+        });
+       
     
     });
         
