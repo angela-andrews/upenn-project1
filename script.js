@@ -78,8 +78,8 @@ subBtn.on("click", function(event){
         venDetails = response2.response.venue;
         console.log(venDetails);
         console.log(venDetails.location.lat);
-        var geoLat = venDetails.location.lat
-        var geoLong = venDetails.location.lng
+        var geoLat = venDetails.location.lat;
+        var geoLong = venDetails.location.lng;
 
         
         var newCard = $("<div class='card w-15 nom-card float-left m-1'>");
@@ -105,7 +105,7 @@ subBtn.on("click", function(event){
 
 
     });
-  }; 
+  } 
   });
 });
 
@@ -143,7 +143,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
         newCard.attr("id", sv.id);
         newCard.attr("url", sv.url);
         newCard.attr("geo-lat", sv.lat);
-        newCard.attr("geo-lng", sv.long)
+        newCard.attr("geo-lng", sv.long);
     var cardHeader= $("<div class='card-header bg-warning text-center'>").text(sv.name);
     var cardBody = $("<div class='card-body p-1 text-center'>");
     var newBlock =$("<div class='blockquote mb-0'>");
@@ -304,27 +304,17 @@ $(document).on("click", ".nomination", function(){
 
             //$(".winner-name").append(winningName);
             $(".winner-addr").append(winningLoc);
-            var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>"
+            var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>";
             $(".winner-name").append(preurl);
 
             $("#winner").modal('show');
-            // var jumboDiv = $("<div class='jumbotron jumbotron-fluid'>");
-            // var jumboContain = $("<div class='container'>");
-            // var jumboHeader = $("<h1 class='display-4'>").text("You have chosen: ");
-            // var jumboName = $("<h2>").text(winningName);
-            // var jumboLoc = $("<h3>").text(winningLoc);
-            // var jumboUrl = $("<h4>").text(winningUrl);
-
-            // jumboContain.append(jumboHeader, jumboName, jumboLoc, jumboUrl);
-            // jumboDiv.append(jumboContain);
-
-            // $("#winning-display-col").append(jumboDiv);
             
         });
 
     });
    
-};
+}
+
 //////////////use connections to record when voting is complete
 
     var connectionsRef = database.ref("/connections");
@@ -351,9 +341,10 @@ $(document).on("click", ".nomination", function(){
     });
    
     function getUsersCurrent(num) {
-        //alert("is it out? " + num);
+        //hack to get the usersCurrent out of the function above
+        localStorage.clear();
         localStorage.setItem("usersCurrent", num);
-        return num;
+        
     }
     //Nope, sets userCurrent to null
     //usersCurrent=localStorage.getItem("usersCurrent");
@@ -388,17 +379,3 @@ $(document).on("click", ".nomination", function(){
             clicked.addClass("voteCount1");
     }
 });
-    
-    //////// end nominations are over time to vote modal /////////
-
-//1st modal - noms in , voting begis  # 22
-//after noms have been pushed, get a snaphot and compare # of connected
-// # of completedArray length === usersConnected
-// all noms are in  and voting should being
-//add anohter listner for the .nomination class
-// use the voteCount variable if ==3, 1 color 
-//if ==2 another color  if == some pale color
-
-
-// winner  (tallyscore())  #23
-
