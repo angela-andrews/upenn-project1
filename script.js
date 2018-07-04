@@ -359,7 +359,7 @@ $(document).on("click", ".nomination", function(){
             timeTo: "reset"
         });
         console.log("part 1");
-    })
+    });
         ////clears resets local values, empties the firebase completely
         function firstClear(){
             console.log("part 2");
@@ -373,6 +373,7 @@ $(document).on("click", ".nomination", function(){
             compiledArray = [];
             sortedArray = [];
             completedArray = [];
+            usersCurrent = 0;
             winner = "";
             transformedWinner = "";
             $("#winning-display-col").empty();
@@ -381,17 +382,18 @@ $(document).on("click", ".nomination", function(){
                 is: "empty"
             });
             /////calls reset for users connected so can continue/////
-            setTimeout(resetConnections, 50);
+            setTimeout(resetConnections, 2000);
         }
         ////after the database and local enivronment reset, this makes the connections list
         ////back in the database so voting can begin again
         function resetConnections(){
+            console.log("reset connection function run");
             var connectionsRef = database.ref("/connections");
             // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
             var connectedRef = database.ref(".info/connected");
 
             // When the client's connection state changes...
-            connectedRef.on("value", function(snap){
+            connectedRef.once("value", function(snap){
                     if(snap.val()){
                         var con = connectionsRef.push(true);
                         // Remove user from the connection list when they disconnect.
