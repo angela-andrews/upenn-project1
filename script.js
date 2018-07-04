@@ -12,19 +12,40 @@ var config = {
 
   //////////////////////////////////////////////////////
 
-var database = firebase.database();
-var subBtn = $("button[type='submit']");
-var input = $("#search-input");
-var voteCount = 3;
-var chosen = [];
-var item;
-var compiledArray = [];
-var sortedArray = [];
-var winner = "";
-var transformedWinner = "";
-var usersCurrent = 0;
+    var database = firebase.database();
+    var subBtn = $("#search-sub-btn");
+    var input = $("#search-input");
+    var voteCount = 3;
+    var chosen = [];
+    var item;
+    var compiledArray = [];
+    var sortedArray = [];
+    var winner = "";
+    var transformedWinner = "";
+    var usersCurrent = 0;
+    var clientId = localStorage.getItem("storedId");
+    var clientSecret = localStorage.getItem("storedSecret");
+    var completedArray = [];
 
-//created so we can check the Id against the one stored in the database to maybe keep track of whos completed voting and etc.
+
+//////////////////////////////////////////////////////
+
+
+// user must add credentials before search
+$(window).on("load", function(){
+    $("#cred-modal").modal("show");
+});
+
+$("#cred-submit-btn").on("click", function(event){
+    event.preventDefault();
+    var clientId = "client_id=" + $("#modal-input-id").val();
+    var clientSecret = "client_secret=" + $("#modal-input-secret").val();
+
+    localStorage.clear();
+    localStorage.setItem("storedId", clientId);
+    localStorage.setItem("storedSecret", clientSecret);
+       
+})
 
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
@@ -37,12 +58,7 @@ subBtn.on("click", function(event){
     var keyword = '&query=' + input.val();
     //first call asks API for a list of restuarants within given geoloc
     $.ajax({
-        // url:'https://api.foursquare.com/v2/venues/search?limit=2&client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815&near=Philadelphia' + keyword, //andrewdwilk
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815&near=Philadelphia' + keyword, //pamrecnetwork
-        url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815&near=Philadelphia' + keyword, //andrewwilk1990
-        // url:'https://api.foursquare.com/v2/venues/search?limit=5&client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815&near=Philadelphia' + keyword, //
-        // url:'https://api.foursquare.com/v2/venues/search?limit=1&client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815&near=Philadelphia' + keyword, //
-        
+        url:'https://api.foursquare.com/v2/venues/search?limit=1&' + clientId + '&' + clientSecret +'&v=20130815&near=Philadelphia' + keyword, 
         dataType: 'json',
         
 }).then(function(response){
@@ -60,12 +76,7 @@ subBtn.on("click", function(event){
     //for each id in the venueid array, an ajax call is made for complete venue information, this info used to populate divs for each with venue-choice class connected to a click event
     for(var j = 0; j<venIdArray.length; j++){
         $.ajax({
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=FKPJMRN1PCLMFIO32S4QKWS4MV5X0Y1JAKZYOGRP0I4BMVW1&client_secret=BPRZ4NPXWKPRJVCPA3LWZXC5C0A1J5FNNMNKIMNON0CSGTEA&v=20130815', //andrewdwilk
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=4UJJFJRKUVNW1LRBLHWQSZHBUVWQMMH14O3H40RTTNAN5ZAQ&client_secret=AHIYIEJF1EZTPCNWQJ05HOYNZEUJCFNIK0TXE1DZEY4P2KE1&v=20130815', //pamrecnetwork
-            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=K3TZ4RDWFM4WLDUREOH0VSA0BDCXO5TAYR0BPLEML535HC0M&client_secret=3PT4TSFEMQI0GOLNMP5QOTK1CSH24XQ1AVZUIATQ5QMNVH5B&v=20130815', //andrewwilk1990
-            // url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=GRFVBTPCJBJZVW43D2WN1VWP4VLXQO5I1E2S2PUPOHBT42VV&client_secret=VUAZUO4SHDGM1RWC32TWFWVINL4RDRD2GSEX5IUSZEUKYTB2&v=20130815', //
-            //  url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?client_id=IPXZ2XOHIZPRQZTIPH3YWTZGDRIPHKGWPPNOVZPT1CSUIPZK&client_secret=CJP2KIZAMSRMVPF3FORJ03B20MGMXNTZCCS4TA0GAM1RQK14&v=20130815', //
-           
+            url:'https://api.foursquare.com/v2/venues/' + venIdArray[j] + '?' + clientId + '&' + clientSecret + '&v=20130815', 
             dataType: 'json',
             ///this function takes the received restaurant information and creates cards for each suggestion containing that info and a nomination button
     }).then(function(response2){
@@ -257,7 +268,7 @@ $(document).on("click", ".nomination", function(){
 
 //////////////When voting done, tallies up the vote//////////////
 
-    var completedArray = [];
+    
     ////watches votes completed counter, when equal to number of connections, runs tally function
     database.ref('votersFinished').on("child_added", function(snapshot) {
         var newComplete = snapshot.val();
@@ -316,8 +327,7 @@ $(document).on("click", ".nomination", function(){
 
     });
 
-    
-};
+    };
 
 //////////////use connections to record when voting is complete
 
@@ -340,4 +350,67 @@ $(document).on("click", ".nomination", function(){
             usersCurrent = snap.numChildren();
             $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
             console.log(usersCurrent);
+    });
+
+    //////////////This function resets neccessary html fields and clears the database///////////
+
+    $("#close-btn-within-winning-modal").on("click", function(){
+        database.ref('resetTrigger').push({
+            timeTo: "reset"
+        });
+        console.log("part 1");
+    })
+        ////clears resets local values, empties the firebase completely
+        function firstClear(){
+            console.log("part 2");
+            
+            $("#results-col").empty();
+            $("#nom-col").empty();
+            input.val("");
+            voteCount = 3;
+            chosen = [];
+            item = "";
+            compiledArray = [];
+            sortedArray = [];
+            completedArray = [];
+            winner = "";
+            transformedWinner = "";
+            $("#winning-display-col").empty();
+
+            database.ref().set({
+                is: "empty"
+            });
+            /////calls reset for users connected so can continue/////
+            setTimeout(resetConnections, 50);
+        }
+        ////after the database and local enivronment reset, this makes the connections list
+        ////back in the database so voting can begin again
+        function resetConnections(){
+            var connectionsRef = database.ref("/connections");
+            // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+            var connectedRef = database.ref(".info/connected");
+
+            // When the client's connection state changes...
+            connectedRef.on("value", function(snap){
+                    if(snap.val()){
+                        var con = connectionsRef.push(true);
+                        // Remove user from the connection list when they disconnect.
+                        con.onDisconnect().remove();
+                    }
+
+            });
+            connectionsRef.on("value", function(snap){
+
+                    // The number of online users is the number of children in the connections list.
+                    usersCurrent = snap.numChildren();
+                    $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
+                    console.log(usersCurrent);
+            });
+        }
+
+    //////////////looks for reset call////////////////////
+    database.ref('resetTrigger').on("child_added", function(snapshot) {
+        console.log("waiting for the sun");
+        
+            firstClear();
     });
