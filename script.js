@@ -26,7 +26,7 @@ var config = {
     var clientId = localStorage.getItem("storedId");
     var clientSecret = localStorage.getItem("storedSecret");
     var completedArray = [];
-
+    var nominationCheck = [];
 
 //////////////////////////////////////////////////////
 
@@ -265,7 +265,20 @@ $(document).on("click", ".nomination", function(){
 
 });//vote counting logic end
 
+//////////////Function checking if all nominations are in (ie. is equal to usersConnected//////////////
 
+    database.ref('nominations').on("child_added", function(snapshot) {
+        var newNom = snapshot.val();
+
+        nominationCheck.push(newNom);
+        var howManyNoms = nominationCheck.length;
+        console.log("users connected is", usersCurrent);
+        console.log("voters completed is", howManyNoms);
+
+        if(usersCurrent === howManyNoms){
+            alert("all the votes are in");
+        }
+    })
 //////////////When voting done, tallies up the vote//////////////
 
     
@@ -329,7 +342,7 @@ $(document).on("click", ".nomination", function(){
 
     };
 
-//////////////use connections to record when voting is complete
+    //////////////use connections to record when voting is complete
 
     var connectionsRef = database.ref("/connections");
         // '.info/connected' is a boolean value, true if the client is connected and false if they are not.
@@ -381,7 +394,7 @@ $(document).on("click", ".nomination", function(){
                 is: "empty"
             });
             /////calls reset for users connected so can continue/////
-            setTimeout(resetConnections, 50);
+            setTimeout(resetConnections, 2000);
         }
         ////after the database and local enivronment reset, this makes the connections list
         ////back in the database so voting can begin again
