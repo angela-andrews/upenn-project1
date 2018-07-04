@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+
+
+
+* {
+  box-sizing: border-box;
+  /* text-align: center; */
+  /* background-color: green; */
+}
+
+
+
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+  overflow: auto;
+}
+
+#App-name {
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
+}
+
+#App-tagline1, #App-tagline2, #App-tagline3,  {
+  font-family: 'Fredoka One', cursive;
+}
+
+
+.form-group {
+  display: inline-block;
+}
+
+.form-control {
+  flex: 1;
+}
+#search-submit {
+ float: right;
+}
+
+.navbar {
+  display: flex;
+}
+#nom-col{
+  min-height: 330px;
+  flex: 1;
+}
+
+#map-col{
+  max-height: 330px;
+  width: 100%;
+}
+
+.nomP, {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 14px;
+
+}
+
+.nom-card{
+  display: inline-block;
+  width: 200px;
+  min-height: 150px;
+  vertical-align: top;
+}
+
+.nomination {
+  display: inline-block;
+  width: 150px;
+  min-height: 150px;
+  vertical-align: top;
+}
+
+
+
+.map {
+  width:100%
+}
+
+@media only screen and (max-width: 640px){
+  .nom-card {
+    width: 290px;
+  }
+
+  .nomination {
+    width: 290px;
+  }
+
+
+}
+
+@media screen and (min-width: 980px) and (max-width: 2000px) {
+  #app-tagline3 { display: inline-block; }  /* show it on large screens */
+}
+
+@media screen and (min-width: 0px) and (max-width: 979px) {
+  #app-tagline3 { display: none; }   /* hide it elsewhere */
+}
+
+@media screen and (min-width: 850px) and (max-width: 1024px) {
+  #app-tagline2 { display: inline-block; }  /* show it on large screens */
+}
+
+@media screen and (min-width: 0px) and (max-width: 849px) {
+  #app-tagline2 { display: none; }   /* hide it elsewhere */
+}
+
+@media screen and (min-width: 610px) and (max-width: 1024px) {
+  #app-tagline1 { display: inline-block; }  /* show it on large screens */
+}
+
+@media screen and (min-width: 450px) and (max-width: 609px) {
+  #app-tagline1 { display: none; }   /* hide it elsewhere */
+}
+
+
+@media only screen and (max-width: 500px){
+  .nom-card {
+    width: 100%;
+  }
+
+  .nomination {
+    width: 100%;
+    align-self: auto;
+  }
+
+
+}
+
+/* @media only screen and (max-width: 600px) {
+
+
+  #map-col {
+   align-content: center;
+  }
+
+  iframe {
+    align-content: center
+  }
+ }
+
+
+
+
+@media only screen and (max-width: 640px) {
+  #navbar {
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .container-fluid {
+    padding: 0;
+  }
+
+  
+} */
+
+
+/* @media only screen and (max-width: 960px) {
+
+  #nom-col {
+    min-width: 600px;
+  }
+
+  #map-col{
+
+  }
+
+}
+
+  @media only screen and (max-width: 500px) {
+
+
+ #search-input {
+   max-width: 60px;
+ }
+}
+ */
+
+
+
+/* 
+ .clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+  overflow: auto;
+}
+
+#nom-col{
+  min-height: 350px;
+}
+
+#map-col{
+  min-height: 350px;
+}
+
+.nomP{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.nom-card{
+  min-height: 200px;
+}
+
+#friends{
+  background-color: #ffc107;
+  padding-left: 10px;
+}
+ */
+
