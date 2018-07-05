@@ -30,6 +30,8 @@ var config = {
     var winningName = "";
     var winningLoc = "";
     var winningUrl = "";
+    var canVote = false;
+    var canNom = true;
 
 
 //////////////////////////////////////////////////////
@@ -124,29 +126,28 @@ subBtn.on("click", function(event){
 //////////////function allowing 1 item from suggestion list to be 'chosen', sent to firebase database as a 'nomination'//////////////
 $(document).on("click", ".nomBtn", function(event){
     event.preventDefault();
+    if(canNom === true){
+        console.log("click");
+        var selected = $(this).attr("id");
+        var nameSelected = $(this).attr('venue-name');    
+        var priceSelected = $(this).attr('venue-price');
+        var locSelected = $(this).attr('venue-loc');
+        var squareUrl = $(this).attr('square-url');
+        var geoLat = $(this).attr('geo-lat');
+        var geoLong = $(this).attr('geo-lng');
 
-    console.log("click");
-    var selected = $(this).attr("id");
-    var nameSelected = $(this).attr('venue-name');    
-    var priceSelected = $(this).attr('venue-price');
-    var locSelected = $(this).attr('venue-loc');
-    var squareUrl = $(this).attr('square-url');
-    var geoLat = $(this).attr('geo-lat');
-    var geoLong = $(this).attr('geo-lng');
+        database.ref('nominations').push({
+            id: selected,
+            name: nameSelected,
+            price: priceSelected,
+            location: locSelected,
+            url: squareUrl,
+            lat: geoLat,
+            long: geoLong
+        });
 
-    database.ref('nominations').push({
-        id: selected,
-        name: nameSelected,
-        price: priceSelected,
-        location: locSelected,
-        url: squareUrl,
-        lat: geoLat,
-        long: geoLong
-    });
-
-
-
-
+        canNom = false;
+    }else{alert("youre already nominated a choice")}
 });
 //////////////Takes firebase data, populates ballot, adds pin to map//////////////
 database.ref('nominations').on("child_added", function(snapshot) {
@@ -172,122 +173,124 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
     if(nominationArray.length === usersCurrent){
         $("#nomsIn").modal("show");
+        canVote = true;
     }
 
 });
 
 //////////////nominations are clicked, weighted voting occurs//////////////
 $(document).on("click", ".nomination", function(){
-    console.log("object clicked pre ifelse ", this);
-    //create a var called selected ID this.attr(id)
-    var id = $(this).attr("id");
-    console.log("id preifelse ", id);
+    if(canVote === true){
 
-    if(voteCount > 0){
-        var selectedId = $(this).attr("id");
-        console.log("selectedId, after votecount check ", selectedId);
+        console.log("object clicked pre ifelse ", this);
+        //create a var called selected ID this.attr(id)
+        var id = $(this).attr("id");
+        console.log("id preifelse ", id);
 
-        if(chosen.indexOf(selectedId) !== -1){//it is in the array
-            // alert("Please make another selection");
-            console.log("this is already in the chosen array so nothing further happens");
-        }else{
-            //not in chosen array, so is a valid vote
-            chosen.push(selectedId);
-            console.log("the chosen array has been updated ", chosen);
+        if(voteCount > 0){
+            var selectedId = $(this).attr("id");
+            console.log("selectedId, after votecount check ", selectedId);
 
-            //see if its in the database
+            if(chosen.indexOf(selectedId) !== -1){//it is in the array
+                // alert("Please make another selection");
+                console.log("this is already in the chosen array so nothing further happens");
+            }else{
+                //not in chosen array, so is a valid vote
+                chosen.push(selectedId);
+                console.log("the chosen array has been updated ", chosen);
 
-            database.ref().once("value", function(snapshot) {
-                if(!snapshot.child('votes').exists() && voteCount === 3){
-                    console.log("votes determined to not exist, now created and first nomination and vote added");
-                    database.ref('votes').push({
-                        id: selectedId,
-                        score: 3
-                    });
-                    voteCount = voteCount-1;
-                }else{
-                    console.log("theres already one vote in the database, so we now check if this one has been nominated");
-                    console.log("this snapshot was grabbed after it was determined that 'votes' exists ", snapshot);
-                    var returnedArray = [];
-                    snapshot.child('votes').forEach(function(childSnap){
-                        console.log("getting each ID");
-                        console.log("this is the childsnap, the one taken to get all the database item ids ", childSnap);
-                        item = childSnap.val();
-                        item.key = childSnap.key;
+                //see if its in the database
 
-                        returnedArray.push(item);
-                        console.log("this is the array that we put ids into ", returnedArray);
-                        console.log("this is the length of the array ", returnedArray.length);
-
-                        //here we see if the selected Id is in the database
-                        
-                    });//for each end
-                    var idsArray = [];
-                    var scoresArray = [];
-
-                        for(var k = 0; k<returnedArray.length; k++){
-                            idsArray.push(returnedArray[k].id);
-                        }
-
-                        for(var y = 0; y<returnedArray.length; y++){
-                            scoresArray.push(returnedArray[y].score);
-                        }
-
-                        if(idsArray.indexOf(selectedId) === -1){
-                            console.log("it appears to this code that the ID isnt yet in the database, it will be added");
-                            database.ref('votes').push({
-                                id: id,
-                                score: voteCount
-                            });
-                        }else{
-                            //if the selected ID matches the id of one of the database entities, I need to take k, which will be the index of the 
-                            //database object to be updated, use returned arrays to get the firebase id of that object, and use set to update the changes
-                            console.log("we need to update but dont know how");
-                            if(idsArray.indexOf(selectedId)!== -1){
-                                var targetIndex = idsArray.indexOf(selectedId);
-                                    console.log("this is the index we're looking for ", targetIndex);
-                                var targetKey = returnedArray[targetIndex].key;
-                                    console.log("here's the database key to target ", targetKey);
-                                var pathToUpdate = targetKey + "/" + "score";
-                                var scoreToUpdate = returnedArray[targetIndex].score + voteCount;
-                                    console.log("This is the going to be the new score value", scoreToUpdate);
-                                database.ref('votes').child(pathToUpdate).set(scoreToUpdate);
-                            }
-                        }
-                    voteCount = voteCount-1;
-                    console.log("the updated voteCount for this user is ", voteCount);
-                    if(voteCount < 1){
-                        database.ref('votersFinished').push({
-                            votingComplete: true
+                database.ref().once("value", function(snapshot) {
+                    if(!snapshot.child('votes').exists() && voteCount === 3){
+                        console.log("votes determined to not exist, now created and first nomination and vote added");
+                        database.ref('votes').push({
+                            id: selectedId,
+                            score: 3
                         });
+                        voteCount = voteCount-1;
+                    }else{
+                        console.log("theres already one vote in the database, so we now check if this one has been nominated");
+                        console.log("this snapshot was grabbed after it was determined that 'votes' exists ", snapshot);
+                        var returnedArray = [];
+                        snapshot.child('votes').forEach(function(childSnap){
+                            console.log("getting each ID");
+                            console.log("this is the childsnap, the one taken to get all the database item ids ", childSnap);
+                            item = childSnap.val();
+                            item.key = childSnap.key;
 
-                    }
-                }//end of else that comes after it was determined that 'votes' exists
-            });
+                            returnedArray.push(item);
+                            console.log("this is the array that we put ids into ", returnedArray);
+                            console.log("this is the length of the array ", returnedArray.length);
+
+                            //here we see if the selected Id is in the database
+                            
+                        });//for each end
+                        var idsArray = [];
+                        var scoresArray = [];
+
+                            for(var k = 0; k<returnedArray.length; k++){
+                                idsArray.push(returnedArray[k].id);
+                            }
+
+                            for(var y = 0; y<returnedArray.length; y++){
+                                scoresArray.push(returnedArray[y].score);
+                            }
+
+                            if(idsArray.indexOf(selectedId) === -1){
+                                console.log("it appears to this code that the ID isnt yet in the database, it will be added");
+                                database.ref('votes').push({
+                                    id: id,
+                                    score: voteCount
+                                });
+                            }else{
+                                //if the selected ID matches the id of one of the database entities, I need to take k, which will be the index of the 
+                                //database object to be updated, use returned arrays to get the firebase id of that object, and use set to update the changes
+                                console.log("we need to update but dont know how");
+                                if(idsArray.indexOf(selectedId)!== -1){
+                                    var targetIndex = idsArray.indexOf(selectedId);
+                                        console.log("this is the index we're looking for ", targetIndex);
+                                    var targetKey = returnedArray[targetIndex].key;
+                                        console.log("here's the database key to target ", targetKey);
+                                    var pathToUpdate = targetKey + "/" + "score";
+                                    var scoreToUpdate = returnedArray[targetIndex].score + voteCount;
+                                        console.log("This is the going to be the new score value", scoreToUpdate);
+                                    database.ref('votes').child(pathToUpdate).set(scoreToUpdate);
+                                }
+                            }
+                        voteCount = voteCount-1;
+                        console.log("the updated voteCount for this user is ", voteCount);
+                        if(voteCount < 1){
+                            database.ref('votersFinished').push({
+                                votingComplete: true
+                            });
+
+                        }
+                    }//end of else that comes after it was determined that 'votes' exists
+                });
+                
+            }//else end of chosen indexof check
             
-        }//else end of chosen indexof check
-        
-    }else{
-        console.log("user is out of votes");
-    }//voteCount super end
+        }else{
+            console.log("user is out of votes");
+        }//voteCount super end
 
-    //////////////Seeing if voting is complete//////////////
-    ////////////// as choices are nominated cards change color /////////////////
-
+    }else{alert("cant vote yet");}///canVote if statement end
 });//vote counting logic end
-
+///////changes color based on which vote it is///////////
 $(document).on("click", ".nomination", function(){
-       
-    var clicked = $(this);
-    if(voteCount === 3){
-        clicked.addClass("voteCount3");
-    }
-    if(voteCount === 2){
-            clicked.addClass("voteCount2");
-    }
-    if(voteCount === 1){
-            clicked.addClass("voteCount1");
-    }
+    if(canVote===true){
+        var clicked = $(this);
+        if(voteCount === 3){
+            clicked.addClass("voteCount3");
+        }
+        if(voteCount === 2){
+                clicked.addClass("voteCount2");
+        }
+        if(voteCount === 1){
+                clicked.addClass("voteCount1");
+        }
+    }else{alert("checked");}
 });
 //////////////When voting done, tallies up the vote//////////////
 
@@ -385,6 +388,7 @@ $(document).on("click", ".nomination", function(){
             
             $("#results-col").empty();
             $("#nom-col").empty();
+
             input.val("");
             voteCount = 3;
             chosen = [];
@@ -395,6 +399,9 @@ $(document).on("click", ".nomination", function(){
             winner = "";
             transformedWinner = "";
             nominationArray = [];
+            canVote = false;
+            canNom = true;
+
             $("#winner").modal("hide");
             $("#nomsIn").modal({ show: false});
             $(".winner-name").empty();
