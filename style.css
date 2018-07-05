@@ -31,6 +31,10 @@
 #friends{
   background-color: #ffc107;
   padding-left: 10px;
+  
+}
+#currentUsers {
+  font-weight: 700;
 }
 
 .modal-header{

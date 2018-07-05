@@ -169,6 +169,21 @@ database.ref('nominations').on("child_added", function(snapshot) {
 
 });
 
+////////////// as choices are nominated cards change color /////////////////
+$(document).on("click", ".nomination", function(){
+       
+    var clicked = $(this);
+    if(voteCount === 3){
+        clicked.addClass("voteCount3");
+    }
+    if(voteCount === 2){
+            clicked.addClass("voteCount2");
+    }
+    if(voteCount === 1){
+            clicked.addClass("voteCount1");
+    }
+});
+
 //////////////nominations are clicked, weighted voting occurs//////////////
 $(document).on("click", ".nomination", function(){
     console.log("object clicked pre ifelse ", this);
@@ -263,28 +278,24 @@ $(document).on("click", ".nomination", function(){
     }else{
         console.log("user is out of votes");
     }//voteCount super end
-
-    //////////////Seeing if voting is complete//////////////
-    ////////////// as choices are nominated cards change color /////////////////
-        $(document).on("click", ".nomination", function(){
-       
-            var clicked = $(this);
-            if(voteCount === 3){
-                clicked.addClass("voteCount3");
-            }
-            if(voteCount === 2){
-                    clicked.addClass("voteCount2");
-            }
-            if(voteCount === 1){
-                    clicked.addClass("voteCount1");
-            }
-        });
-
+    
 });//vote counting logic end
 
-
 //////////////When voting done, tallies up the vote//////////////
+    //////// A N G E L A --- nominations are over- time to vote modal /////////
+    database.ref('nominations').on("child_added", function(snapshot) {
+        var newNom = snapshot.val();
+    
+        nominationArray.push(newNom);
+        var nomsIn = nominationArray.length;
+        console.log("users connected is", usersCurrent);
+        console.log("nominations in is", nomsIn);
+                
+            if(usersCurrent === nomsIn){
+            $("#nomsIn").modal('show');
+        }
 
+    });
     
     ////watches votes completed counter, when equal to number of connections, runs tally function
     database.ref('votersFinished').on("child_added", function(snapshot) {
@@ -358,7 +369,7 @@ $(document).on("click", ".nomination", function(){
 
             // The number of online users is the number of children in the connections list.
             usersCurrent = snap.numChildren();
-            $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
+            $('#currentUsers').text(usersCurrent);
             console.log("Number of users connected: " + usersCurrent);
     });
 
@@ -386,12 +397,16 @@ $(document).on("click", ".nomination", function(){
             winner = "";
             transformedWinner = "";
             $("#winning-display-col").empty();
+            $("#winner").modal("hide");
+            $(".winner-name").empty();
+            $(".winner-addr").empty();
+            $(".winner-url").empty();
 
             database.ref().set({
                 is: "empty"
             });
             /////calls reset for users connected so can continue/////
-            setTimeout(resetConnections, 50);
+            setTimeout(resetConnections, 2000);
         }
         ////after the database and local enivronment reset, this makes the connections list
         ////back in the database so voting can begin again
@@ -413,7 +428,7 @@ $(document).on("click", ".nomination", function(){
 
                     // The number of online users is the number of children in the connections list.
                     usersCurrent = snap.numChildren();
-                    $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
+                    $('#currentUsers').text(usersCurrent);
                     console.log(usersCurrent);
             });
         }
