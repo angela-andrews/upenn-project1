@@ -151,7 +151,7 @@ $(document).on("click", ".nomBtn", function(event){
 //////////////Takes firebase data, populates ballot, adds pin to map//////////////
 database.ref('nominations').on("child_added", function(snapshot) {
     var sv = snapshot.val();
-    // console.log(sv);
+    nominationArray.push(sv);
     
     var newCard = $("<div class='card nomination mb-2'>");
         newCard.attr("id", sv.id);
@@ -169,6 +169,10 @@ database.ref('nominations').on("child_added", function(snapshot) {
     newCard.append(cardHeader, cardBody);
 
     $("#nom-col").append(newCard);
+
+    if(nominationArray.length === usersCurrent){
+        $("#nomsIn").modal("show");
+    }
 
 });
 
@@ -366,12 +370,15 @@ $(document).on("click", ".nomination", function(){
 
     //////////////This function resets neccessary html fields and clears the database///////////
 
-    $("#resetApp").on("click", function(){
+    $("#resetApp").on("click", initReset);
+
+
+    function initReset(){
         database.ref('resetTrigger').push({
             timeTo: "reset"
         });
         console.log("part 1");
-    })
+    };
         ////clears resets local values, empties the firebase completely
         function firstClear(){
             console.log("part 2");
@@ -387,7 +394,9 @@ $(document).on("click", ".nomination", function(){
             completedArray = [];
             winner = "";
             transformedWinner = "";
+            nominationArray = [];
             $("#winner").modal("hide");
+            $("#nomsIn").modal({ show: false});
             $(".winner-name").empty();
             $(".winner-addr").empty();
             $(".winner-url").empty();
@@ -428,4 +437,9 @@ $(document).on("click", ".nomination", function(){
         console.log("waiting for the sun");
         
             firstClear();
+    });
+
+    //////////////reset button/////////
+    $("#test-reset").on("click", function(){
+        initReset();
     });
