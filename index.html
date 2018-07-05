@@ -16,9 +16,21 @@
             
         </head>
         <body>
-            <header>
-                <div id="friends"><p>Friends connected: <span id="currentUsers"></span></p></div>
-            </header>
+
+            <nav class="navbar navbar-light bg-info" id="navbar">
+                    <div id="nav-info"><div id="app-info"><a class="navbar-brand text-dark" id="app-name">Eat Meet</a><a class="text-light" id="app-tagline1">Dine by consensus.</a> <div id="friends"><a>Friends connected: <span id="currentUsers"></span></a></div>
+                        <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="search-input" placeholder="Tacos">
+                    </div>
+                    <button id="search-sub-btn" type="submit" class="btn btn-default hvr-radial-out btn btn-primary bg-dark"><i class="fas fa-search hvr-icon hvr-icon-grow"></i>
+                    </button>
+                    <button id="credential-cog" type="reset" class="btn btn-default hvr-radial-out btn btn-primary bg-dark"><i class="fas fa-cog hvr-icon"></i>
+                    </button>
+                  </form></div>
+            </nav>
+
+
 
             <div id="modal-section">
                     <div id="cred-modal" class="modal" tabindex="-1" role="dialog">
@@ -40,7 +52,7 @@
                                   <button id="cred-submit-btn" type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                               </div>
-                            </div>
+                        </div>
                     </div>
             </div>
             <!--Modal Noms In-->
@@ -116,18 +128,7 @@
                         
                     </div><!--winning display col end-->
                 </div><!--winning display row end-->
-                <div id="search-area" class="row">
-                    <div id="search-col" class="col-4 clearfix mx-auto mt-5">
-                            <form>
-                                <div class="form-group">
-                                      <label for="searchinput">Search Term</label>
-                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos" onfocus="this.value=''" >    
-                                </div>
-                                <button id="search-sub-btn" type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-
-                    </div><!--search-col end-->
-                </div><!--search row end-->
+                
                 <div id="nom-row" class="row">
                     <div id="nom-col" class="col-4 mx-auto mt-3">
 
@@ -146,7 +147,7 @@
             </div><!--container end-->
 
     <!-- firebase script -->
-    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -166,3 +167,4 @@
     </script>            
        </body>
     </html>
+

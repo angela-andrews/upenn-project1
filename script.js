@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyCOUal9HvDnZtCGAvwNi6l18K5nUX6cXkA",
-    authDomain: "seven-test-6f0ce.firebaseapp.com",
-    databaseURL: "https://seven-test-6f0ce.firebaseio.com",
-    projectId: "seven-test-6f0ce",
-    storageBucket: "seven-test-6f0ce.appspot.com",
-    messagingSenderId: "838213031113"
+    apiKey: "AIzaSyC18wox4yhs3fxFA-iEJK_9W1SC7P_JOvs",
+    authDomain: "andy-test-d1b50.firebaseapp.com",
+    databaseURL: "https://andy-test-d1b50.firebaseio.com",
+    projectId: "andy-test-d1b50",
+    storageBucket: "",
+    messagingSenderId: "109786847004"
   };
   firebase.initializeApp(config);
 
@@ -43,7 +43,10 @@ var config = {
 //////////////////////////
 
 // user must add credentials before search
-
+$("#credential-cog").on("click", function(event){
+    event.preventDefault();
+    $("#cred-modal").modal("show");
+});
 
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
@@ -58,7 +61,7 @@ $("#cred-submit-btn").on("click", function(event){
 
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
-subBtn.on("click", function(event){
+$("#search-sub-btn").on("click", function(event){
     event.preventDefault();
 
     ////empties results area with start of each search////
