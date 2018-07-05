@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
-    authDomain: "clickbutton-6f564.firebaseapp.com",
-    databaseURL: "https://clickbutton-6f564.firebaseio.com",
-    projectId: "clickbutton-6f564",
-    storageBucket: "clickbutton-6f564.appspot.com",
-    messagingSenderId: "178282862091"
+    apiKey: "AIzaSyCOUal9HvDnZtCGAvwNi6l18K5nUX6cXkA",
+    authDomain: "seven-test-6f0ce.firebaseapp.com",
+    databaseURL: "https://seven-test-6f0ce.firebaseio.com",
+    projectId: "seven-test-6f0ce",
+    storageBucket: "seven-test-6f0ce.appspot.com",
+    messagingSenderId: "838213031113"
   };
   firebase.initializeApp(config);
 
@@ -27,6 +27,9 @@ var config = {
     var clientSecret = localStorage.getItem("storedSecret");
     var completedArray = [];
     var nominationArray = [];
+    var winningName = "";
+    var winningLoc = "";
+    var winningUrl = "";
 
 
 //////////////////////////////////////////////////////
@@ -266,23 +269,22 @@ $(document).on("click", ".nomination", function(){
 
     //////////////Seeing if voting is complete//////////////
     ////////////// as choices are nominated cards change color /////////////////
-        $(document).on("click", ".nomination", function(){
-       
-            var clicked = $(this);
-            if(voteCount === 3){
-                clicked.addClass("voteCount3");
-            }
-            if(voteCount === 2){
-                    clicked.addClass("voteCount2");
-            }
-            if(voteCount === 1){
-                    clicked.addClass("voteCount1");
-            }
-        });
 
 });//vote counting logic end
 
-
+$(document).on("click", ".nomination", function(){
+       
+    var clicked = $(this);
+    if(voteCount === 3){
+        clicked.addClass("voteCount3");
+    }
+    if(voteCount === 2){
+            clicked.addClass("voteCount2");
+    }
+    if(voteCount === 1){
+            clicked.addClass("voteCount1");
+    }
+});
 //////////////When voting done, tallies up the vote//////////////
 
     
@@ -324,9 +326,9 @@ $(document).on("click", ".nomination", function(){
             transformedWinner = winningObject[Object.keys(winningObject)[0]];
             console.log("name of the winner is ", transformedWinner.name);
 
-            var winningName = transformedWinner.name;
-            var winningLoc = transformedWinner.location;
-            var winningUrl = transformedWinner.url;
+            winningName = transformedWinner.name;
+            winningLoc = transformedWinner.location;
+            winningUrl = transformedWinner.url;
 
             $(".winner-addr").append(winningLoc);
             var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>";
@@ -385,13 +387,16 @@ $(document).on("click", ".nomination", function(){
             completedArray = [];
             winner = "";
             transformedWinner = "";
-            $("#winning-display-col").empty();
+            $("#winner").modal("hide");
+            $(".winner-name").empty();
+            $(".winner-addr").empty();
+            $(".winner-url").empty();
 
             database.ref().set({
                 is: "empty"
             });
             /////calls reset for users connected so can continue/////
-            setTimeout(resetConnections, 50);
+            setTimeout(resetConnections, 2000);
         }
         ////after the database and local enivronment reset, this makes the connections list
         ////back in the database so voting can begin again
