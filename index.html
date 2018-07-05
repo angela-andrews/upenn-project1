@@ -3,8 +3,14 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <!--jquery before Bootstrap for modal -->
+            <!-- <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script> -->
             <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
             <link rel="stylesheet" type= "text/css" href="style.css">
             <title>EatMeet</title>
             
@@ -29,7 +35,7 @@
                                     <input type="text" id="modal-input-secret" class="form-control" placeholder="Client Secret" aria-label="Client Secret">
                                 </div>
                                 <div class="modal-footer">
-                                        <p>You will only need to do this once per computer</p>
+                                        <p>You will only need to do this once per browser per computer</p>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                   <button id="cred-submit-btn" type="button" class="btn btn-primary">Save changes</button>
                                 </div>
@@ -37,6 +43,72 @@
                             </div>
                     </div>
             </div>
+            <!--Modal Noms In-->
+            <div class="modal" id="nomsIn">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <h2 class="modal-title">All the Nominations are in</h2>
+                            <button class="close" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="modal-body-text">Click on each restaurant to cast your vote on where you go for dinner. Time to <span class="eatmeet">EatMeet!</span></p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+            </div> <!--End modal container div-->
+            <!--end Modal Noms In-->
+
+              <!--Modal Winner-->
+              <div class="modal" id="winner">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                               <h2 class="modal-title"><i class="fas fa-award"></i> The Winner is....</h2>
+                                <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                            </div><!--End modal header-->
+                            <div class="modal-body">
+                                <p class="winner-name"> </p>
+                                <p class="winner-addr"> </p>
+                                <p class="winner-url"> </p>
+                            </div><!--End modal body-->
+                        </div><!--End modal content-->
+                    </div><!--End modal-dialog-->
+                </div> <!--End modal container div-->
+                <!--end Winner-->
+           
+                <!--Modal cant vote-->
+              <div class="modal" id="cantVote">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
+                            <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="cant vote test">Sorry, voting can't begin because all the nominations aren't yet</p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+              </div> <!--End modal container div-->
+            <!--end cant vote-->
+
+            <!--Modal cant nominate-->
+            <div class="modal" id="cantNom">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
+                            <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="cant vote test">Sorry, but each member of the group can only suggest one restaurant</p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+            </div> <!--End modal container div-->
+            <!--end cant nominate-->
+       
 
             <div class="container-fluid">
                 <div id="winning-display" class="row">
@@ -49,7 +121,7 @@
                             <form>
                                 <div class="form-group">
                                       <label for="searchinput">Search Term</label>
-                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos">  
+                                      <input type="text" class="form-control" id="search-input" placeholder="Tacos" onfocus="this.value=''" >    
                                 </div>
                                 <button id="search-sub-btn" type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -61,7 +133,7 @@
 
                     </div><!--nom col end-->
                     <div id="map-col" class="col-6 ml-auto mr-3 pt-2 mt-3 bg-light text-center">
-                        <iframe height="400" width="300" border="0" marginwidth="0" marginheight="0" src="https://www.mapquest.com/embed/us/pa/philadelphia-282039520?center=39.95106050000002,-75.16562039999998&zoom=12&maptype=undefined"></iframe>    
+                        
                     </div><!--map col end-->
                 </div><!--nom row end-->
                 <div id="results-row" class="row mb-5">
@@ -70,18 +142,27 @@
 
                     </div><!--results-col end-->
                 </div><!--results row end-->
-                <button id="close-btn-within-winning-modal"></button>
+                <button id="test-reset" class="btn btn-warning">Start Over</button>
             </div><!--container end-->
 
-
     <!-- firebase script -->
-
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-  
-                          
+    <!--google maps-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9b9Lcgpr-ZiueQx8FYSpzNht4kZ00VqA
+		&callback=initMap">
+    </script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map-col'), {
+            zoom: 8,
+            center: {lat: 39.9526, lng: -75.1652}
+            });
+        }
+    </script>            
        </body>
     </html>
