@@ -36,8 +36,10 @@ var config = {
 
 //////////////////////////////////////////////////////
 ////////modal hides///////
-$("#nomsIn").modal({ show: false});
-$("#winner").modal({ show: false});
+    $("#nomsIn").modal({ show: false});
+    $("#winner").modal({ show: false});
+    $("#cantVote").modal({ show: false});
+    $("#cantNom").modal({ show: false});
 //////////////////////////
 
 // user must add credentials before search
@@ -147,7 +149,9 @@ $(document).on("click", ".nomBtn", function(event){
         });
 
         canNom = false;
-    }else{alert("youre already nominated a choice")}
+    }else{
+        $("#cantNom").modal("show");
+    }
 });
 //////////////Takes firebase data, populates ballot, adds pin to map//////////////
 database.ref('nominations').on("child_added", function(snapshot) {
@@ -275,8 +279,11 @@ $(document).on("click", ".nomination", function(){
             console.log("user is out of votes");
         }//voteCount super end
 
-    }else{alert("cant vote yet");}///canVote if statement end
+    }else{
+        $("#cantVote").modal("show");
+    }///canVote if statement end
 });//vote counting logic end
+
 ///////changes color based on which vote it is///////////
 $(document).on("click", ".nomination", function(){
     if(canVote===true){
@@ -290,7 +297,7 @@ $(document).on("click", ".nomination", function(){
         if(voteCount === 1){
                 clicked.addClass("voteCount1");
         }
-    }else{alert("checked");}
+    }
 });
 //////////////When voting done, tallies up the vote//////////////
 
