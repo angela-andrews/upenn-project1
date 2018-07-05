@@ -82,7 +82,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                           <h2 class="modal-title"><i class="fas fa-award"></i>Whoops...hold on there</h2>
+                           <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
                             <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
                         </div><!--End modal header-->
                         <div class="modal-body">
@@ -98,7 +98,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h2 class="modal-title"><i class="fas fa-award"></i>Whoops...hold on there</h2>
+                        <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
                             <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
                         </div><!--End modal header-->
                         <div class="modal-body">
@@ -133,7 +133,7 @@
 
                     </div><!--nom col end-->
                     <div id="map-col" class="col-6 ml-auto mr-3 pt-2 mt-3 bg-light text-center">
-                        <iframe height="400" width="300" border="0" marginwidth="0" marginheight="0" src="https://www.mapquest.com/embed/us/pa/philadelphia-282039520?center=39.95106050000002,-75.16562039999998&zoom=12&maptype=undefined"></iframe>    
+                        
                     </div><!--map col end-->
                 </div><!--nom row end-->
                 <div id="results-row" class="row mb-5">
@@ -145,15 +145,24 @@
                 <button id="test-reset" class="btn btn-warning">Start Over</button>
             </div><!--container end-->
 
-
     <!-- firebase script -->
-
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-  
-                          
+    <!--google maps-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9b9Lcgpr-ZiueQx8FYSpzNht4kZ00VqA
+		&callback=initMap">
+    </script>
+        <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map-col'), {
+            zoom: 8,
+            center: {lat: 39.9526, lng: -75.1652}
+            });
+        }
+    </script>            
        </body>
     </html>

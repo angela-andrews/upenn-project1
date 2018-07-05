@@ -43,9 +43,7 @@ var config = {
 //////////////////////////
 
 // user must add credentials before search
-$(window).on("load", function(){
-    $("#cred-modal").modal("show");
-});
+
 
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
@@ -147,7 +145,7 @@ $(document).on("click", ".nomBtn", function(event){
             lat: geoLat,
             long: geoLong
         });
-
+        
         canNom = false;
     }else{
         $("#cantNom").modal("show");
@@ -179,6 +177,37 @@ database.ref('nominations').on("child_added", function(snapshot) {
         $("#nomsIn").modal("show");
         canVote = true;
     }
+    //////////////map pin to map//////////////
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+        var map = new google.maps.Map(document.getElementById('map-col'), {
+            zoom: 8,
+            center: {lat: 39.9526, lng: -75.1652}
+            });
+
+        function geocodeLatLng(geocoder, map, infowindow) {
+            
+            var latlng = {lat: parseFloat(sv.lat), lng: parseFloat(sv.long)};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+              if (status === 'OK') {
+                if (results[0]) {
+                  map.setZoom(11);
+                  var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                  });
+                  infowindow.setContent(results[0].formatted_address);
+                  infowindow.open(map, marker);
+                } else {
+                  window.alert('No results found');
+                }
+              } else {
+                window.alert('Geocoder failed due to: ' + status);
+              }
+            });
+          }
+
+          geocodeLatLng(geocoder, map, infowindow);
 
 });
 
