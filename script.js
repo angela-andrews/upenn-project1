@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyCOUal9HvDnZtCGAvwNi6l18K5nUX6cXkA",
-    authDomain: "seven-test-6f0ce.firebaseapp.com",
-    databaseURL: "https://seven-test-6f0ce.firebaseio.com",
-    projectId: "seven-test-6f0ce",
-    storageBucket: "seven-test-6f0ce.appspot.com",
-    messagingSenderId: "838213031113"
+    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
+    authDomain: "clickbutton-6f564.firebaseapp.com",
+    databaseURL: "https://clickbutton-6f564.firebaseio.com",
+    projectId: "clickbutton-6f564",
+    storageBucket: "clickbutton-6f564.appspot.com",
+    messagingSenderId: "178282862091"
   };
   firebase.initializeApp(config);
 
@@ -43,7 +43,10 @@ var config = {
 //////////////////////////
 
 // user must add credentials before search
-
+$("#credential-cog").on("click", function(event){
+    event.preventDefault();
+    $("#cred-modal").modal("show");
+});
 
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
@@ -58,7 +61,7 @@ $("#cred-submit-btn").on("click", function(event){
 
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
-subBtn.on("click", function(event){
+$("#search-sub-btn").on("click", function(event){
     event.preventDefault();
 
     ////empties results area with start of each search////
