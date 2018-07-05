@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-    authDomain: "q-test-app.firebaseapp.com",
-    databaseURL: "https://q-test-app.firebaseio.com",
-    projectId: "q-test-app",
-    storageBucket: "q-test-app.appspot.com",
-    messagingSenderId: "660859232414"
+    apiKey: "AIzaSyCXmm5SN6uOEdyUzEL8UHdRyMAO6tHskLQ",
+    authDomain: "clickbutton-6f564.firebaseapp.com",
+    databaseURL: "https://clickbutton-6f564.firebaseio.com",
+    projectId: "clickbutton-6f564",
+    storageBucket: "clickbutton-6f564.appspot.com",
+    messagingSenderId: "178282862091"
   };
   firebase.initializeApp(config);
 
@@ -26,10 +26,14 @@ var config = {
     var clientId = localStorage.getItem("storedId");
     var clientSecret = localStorage.getItem("storedSecret");
     var completedArray = [];
+    var nominationArray = [];
 
 
 //////////////////////////////////////////////////////
-
+////////modal hides///////
+$("#nomsIn").modal({ show: false});
+$("#winner").modal({ show: false});
+//////////////////////////
 
 // user must add credentials before search
 $(window).on("load", function(){
@@ -38,8 +42,8 @@ $(window).on("load", function(){
 
 $("#cred-submit-btn").on("click", function(event){
     event.preventDefault();
-    var clientId = "client_id=" + $("#modal-input-id").val();
-    var clientSecret = "client_secret=" + $("#modal-input-secret").val();
+    var clientId = "client_id=" + $("#modal-input-id").val().trim();
+    var clientSecret = "client_secret=" + $("#modal-input-secret").val().trim();
 
     localStorage.clear();
     localStorage.setItem("storedId", clientId);
@@ -261,7 +265,20 @@ $(document).on("click", ".nomination", function(){
     }//voteCount super end
 
     //////////////Seeing if voting is complete//////////////
-    
+    ////////////// as choices are nominated cards change color /////////////////
+        $(document).on("click", ".nomination", function(){
+       
+            var clicked = $(this);
+            if(voteCount === 3){
+                clicked.addClass("voteCount3");
+            }
+            if(voteCount === 2){
+                    clicked.addClass("voteCount2");
+            }
+            if(voteCount === 1){
+                    clicked.addClass("voteCount1");
+            }
+        });
 
 });//vote counting logic end
 
@@ -311,17 +328,10 @@ $(document).on("click", ".nomination", function(){
             var winningLoc = transformedWinner.location;
             var winningUrl = transformedWinner.url;
 
-            var jumboDiv = $("<div class='jumbotron jumbotron-fluid'>");
-            var jumboContain = $("<div class='container'>");
-            var jumboHeader = $("<h1 class='display-4'>").text("You have chosen: ");
-            var jumboName = $("<h2>").text(winningName);
-            var jumboLoc = $("<h3>").text(winningLoc);
-            var jumboUrl = $("<h4>").text(winningUrl);
-
-            jumboContain.append(jumboHeader, jumboName, jumboLoc, jumboUrl);
-            jumboDiv.append(jumboContain);
-
-            $("#winning-display-col").append(jumboDiv);
+            $(".winner-addr").append(winningLoc);
+            var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>";
+            $(".winner-name").append(preurl);
+            $("#winner").modal('show');
             
         });
 
@@ -349,12 +359,12 @@ $(document).on("click", ".nomination", function(){
             // The number of online users is the number of children in the connections list.
             usersCurrent = snap.numChildren();
             $('#currentUsers').text(usersCurrent).css({"font-weight": "700"});
-            console.log(usersCurrent);
+            console.log("Number of users connected: " + usersCurrent);
     });
 
     //////////////This function resets neccessary html fields and clears the database///////////
 
-    $("#close-btn-within-winning-modal").on("click", function(){
+    $("#resetApp").on("click", function(){
         database.ref('resetTrigger').push({
             timeTo: "reset"
         });
