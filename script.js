@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyC18wox4yhs3fxFA-iEJK_9W1SC7P_JOvs",
-    authDomain: "andy-test-d1b50.firebaseapp.com",
-    databaseURL: "https://andy-test-d1b50.firebaseio.com",
-    projectId: "andy-test-d1b50",
-    storageBucket: "",
-    messagingSenderId: "109786847004"
+    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
+    authDomain: "q-test-app.firebaseapp.com",
+    databaseURL: "https://q-test-app.firebaseio.com",
+    projectId: "q-test-app",
+    storageBucket: "q-test-app.appspot.com",
+    messagingSenderId: "660859232414"
   };
   firebase.initializeApp(config);
 
