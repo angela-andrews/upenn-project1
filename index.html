@@ -3,69 +3,164 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <!--jquery before Bootstrap for modal -->
+            <!-- <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script> -->
             <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-            <link rel="stylesheet" type= "text/css" href="assets/css/style.css">
-            <link rel="stylesheet" type= "text/css" href="assets/css/hover.css">
+            <link rel="stylesheet" type= "text/css" href="style.css">
+            <link rel="stylesheet" type= "text/css" href="hover.css">
+
 
             <title>EatMeet</title>
             
         </head>
-        <body>
-            <header>
-            </header>
-
-                  <nav class="navbar navbar-light bg-info" id="navbar">
-                        <div id="app-info"><a class="navbar-brand text-dark" id="App-name">Eat Meet</a><h7 class="text-light" id="app-tagline1">Dine democratically!</h7> <h7 class="text-light" id="app-tagline2">Search. Select. Find consensus.</h7> <h7 class="text-light" id="app-tagline3">.&nbsp. as easy as 1-2-3!</h7></div>
-                  <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="search-input" placeholder="Tacos">
-                        </div>
-                        <button type="submit" class="btn btn-default hvr-radial-out btn btn-primary bg-dark"><i class="fas fa-search hvr-icon hvr-icon-grow"></i>
-                        </button>
-                        <button type="reset" class="btn btn-default hvr-radial-out btn btn-primary bg-dark"><i class="fas fa-cog hvr-icon"></i>
-                        </button>
-                      </form>
-                      </nav>
-         
-
-
-            <div class="container-fluid"></div>
-                <div id="nom-row" class="row d-flex flex-row align-content-around flex-wrap bg-light">
-                    <div id="nom-col" class="col-6 mx-auto mt-3">
-                    </div><!--nom col end-->
-
-                    <div id="results-col" class="col-6 clearfix mx-auto mt-3 "
-                    ></div><!-- results col end-->
-
-                    <div id="map-col" class="mx-auto  embed-responsive embed-responsive-4by3">
-                        <iframe class="embed-responsive-item map" src="https://www.mapquest.com/embed/us/pa/philadelphia-282039520?center=39.95106050000002,-75.16562039999998&zoom=12&maptype=undefined"></iframe>    
-                    </div><!--map col end-->
-
-                </div><!--nom row end-->
-            </div><!--container end -->
-
-      
+        <body><div id="background"></div><!--background end -->
+            <nav class="navbar navbar-light bg-warning" id="navbar">
+                        <div id="app-info">
+                        <a class="navbar-brand text-dark" id="app-name">Eat Meet</a>
+                        <a class="text-secondary" id="app-tagline1">Dine by consensus!<a> 
+                        <a class="text-dark"id="friends">Now planning a table for <span class="text-danger" id="currentUsers"></span>.</a></div>
+              <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="search-input" placeholder="Tacos">
+                    </div>
+                    <button type="submit" id="search-sub-btn" class="btn btn-default hvr-radial-out btn btn-primary bg-dark" title="Search"><i class="fas fa-search hvr-icon hvr-icon-grow"></i>
+                    </button>
+                    <button type="search" id="credential-cog" class="btn btn-default hvr-radial-out btn btn-primary bg-dark" title="Enter Credentials"><i class="fas fa-cog hvr-icon"></i>
+                    </button>
+                    <button type="reset" id="test-reset" class="btn btn-default hvr-sweep-to-right btn btn-primary bg-dark" title="Start Over"><i class="fas fa-sync-alt hvr-icon"></i>
+                    </button>
+                  </form>
+                  </nav>
 
 
-    <!-- UUID script -->
 
-    <script src=“https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js“></script>
+            <div id="modal-section">
+                    <div id="cred-modal" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Please enter your FourSquare Credentials</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" id="modal-input-id" class="form-control" placeholder="Client Id" aria-label="Client Id">
+                                    <input type="text" id="modal-input-secret" class="form-control" placeholder="Client Secret" aria-label="Client Secret">
+                                </div>
+                                <div class="modal-footer">
+                                        <p>You will only need to do this once per browser per computer</p>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button id="cred-submit-btn" type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </div>
+                            </div>
+                    </div>
+            </div>
+            <!--Modal Noms In-->
+            <div class="modal" id="nomsIn">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <h2 class="modal-title">All the Nominations are in</h2>
+                            <button class="close" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="modal-body-text">Click on each restaurant to cast your vote on where you go for dinner. Time to <span class="eatmeet">EatMeet!</span></p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+            </div> <!--End modal container div-->
+            <!--end Modal Noms In-->
+
+              <!--Modal Winner-->
+              <div class="modal" id="winner">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                               <h2 class="modal-title"><i class="fas fa-award"></i> The Winner is....</h2>
+                                <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                            </div><!--End modal header-->
+                            <div class="modal-body">
+                                <p class="winner-name"> </p>
+                                <p class="winner-addr"> </p>
+                                <p class="winner-url"> </p>
+                            </div><!--End modal body-->
+                        </div><!--End modal content-->
+                    </div><!--End modal-dialog-->
+                </div> <!--End modal container div-->
+                <!--end Winner-->
+           
+                <!--Modal cant vote-->
+              <div class="modal" id="cantVote">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
+                            <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="cant vote test">Sorry, voting can't begin because all the nominations aren't yet</p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+              </div> <!--End modal container div-->
+            <!--end cant vote-->
+
+            <!--Modal cant nominate-->
+            <div class="modal" id="cantNom">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h2 class="modal-title"><i class="fas fa-exclamation"></i>Whoops...hold on there</h2>
+                            <button class="close" id="resetApp" type="button" data-dismiss="modal">X</button>
+                        </div><!--End modal header-->
+                        <div class="modal-body">
+                            <p class="cant vote test">Sorry, but each member of the group can only suggest one restaurant</p>
+                        </div><!--End modal body-->
+                    </div><!--End modal content-->
+                </div><!--End modal-dialog-->
+            </div> <!--End modal container div-->
+            <!--end cant nominate-->
+       
+
+            <div class="container-fluid">
+                    <div id="nom-row" class="row d-flex flex-row align-content-around flex-wrap">
+                            <div id="nom-col" class="col-6 mx-auto mt-3">
+                            </div><!--nom col end-->
+        
+                            <div id="results-col" class="col-6 clearfix mx-auto mt-3">
+                            </div><!-- results col end-->
+        
+                            <div id="map-col" class="mx-auto embed-responsive embed-responsive-4by3">
+                            </div><!--map col end-->
+        
+                        </div><!--nom row end-->
+                    </div><!--container end -->
+
     <!-- firebase script -->
-
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
-    <!-- momentJS script -->
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    
-
-
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-                          
+    <!--google maps-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9b9Lcgpr-ZiueQx8FYSpzNht4kZ00VqA
+		&callback=initMap">
+    </script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map-col'), {
+            zoom: 8,
+            center: {lat: 39.9526, lng: -75.1652}
+            });
+        }
+    </script>  
        </body>
     </html>
