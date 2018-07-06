@@ -17,7 +17,7 @@
         </head>
         <body>
 
-            <nav class="navbar navbar-light bg-info" id="navbar">
+            <!-- <nav class="navbar navbar-light bg-info" id="navbar">
                     <div id="nav-info"><div id="app-info"><a class="navbar-brand text-dark" id="app-name">Eat Meet</a><a class="text-light" id="app-tagline1">Dine by consensus.</a> <div id="friends"><a>Friends connected: <span id="currentUsers"></span></a></div>
                         <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
@@ -28,9 +28,26 @@
                     <button id="credential-cog" type="reset" class="btn btn-default hvr-radial-out btn btn-primary bg-dark"><i class="fas fa-cog hvr-icon"></i>
                     </button>
                   </form></div>
+            </nav> -->
+
+            <nav class="navbar navbar-light bg-info" id="navbar">
+                <div id="app-info">
+                    <a class="navbar-brand text-dark" id="app-name">Eat Meet</a>
+                    <a class="text-light" id="app-tagline1">Dine by consensus!</a> 
+                    <a id="friends">At the table now:<span id="currentUsers"></span></a>
+                </div>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="search-input" placeholder="Tacos">
+                    </div>
+                    <button type="submit" id="search-sub-btn" class="btn btn-default hvr-radial-out btn btn-primary bg-dark" title="Search"><i class="fas fa-search hvr-icon hvr-icon-grow"></i>
+                    </button>
+                    <button type="search" id="credential-cog" class="btn btn-default hvr-radial-out btn btn-primary bg-dark" title="Enter Credentials"><i class="fas fa-cog hvr-icon"></i>
+                    </button>
+                    <button type="reset" id="test-reset" class="btn btn-default hvr-sweep-to-right btn btn-primary bg-dark" title="Start Over"><i class="fas fa-sync-alt hvr-icon"></i>
+                    </button>
+              </form>
             </nav>
-
-
 
             <div id="modal-section">
                     <div id="cred-modal" class="modal" tabindex="-1" role="dialog">
@@ -143,7 +160,7 @@
 
                     </div><!--results-col end-->
                 </div><!--results row end-->
-                <button id="test-reset" class="btn btn-warning">Start Over</button>
+
             </div><!--container end-->
 
     <!-- firebase script -->
