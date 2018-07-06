@@ -1,9 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|BioRhyme+Expanded');
 * {
   box-sizing: border-box;
   /* text-align: center; */
   /* background-color: green; */
 }
-
 .clearfix::after {
   content: "";
   clear: both;
@@ -11,24 +11,129 @@
   overflow: auto;
 }
 
+#nav-info {
+  display:inline-block;
+}
+#app-name {
+  font-family: 'BioRhyme Expanded', serif;
+  font-size: 30px;
+}
+a {
+  font-family: 'Montserrat', sans-serif;
+}
+.form-group {
+  display: inline-block;
+}
+
+#currentUsers {
+  font-family: 'BioRhyme Expanded', serif;
+}
+
+#search-submit {
+ float: right;
+ flex: 2;
+ width: 100%;
+}
+
+.navbar {
+  display: flex;
+}
+
+
+#background {
+  background-image: url(eatmeet-background.jpg);
+  opacity:0.5;
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index:-1;
+}
+
+
 #nom-col{
-  min-height: 350px;
+  min-height: 330px;
+  flex: 1;
 }
-
 #map-col{
-  min-height: 350px;
+  max-height: 300px;
+  width: 100%;
+  position:relative;
+  bottom: 0px;
+  z-index: -1;
+  overflow: hidden;
 }
-
-.nomP{
+.nomP, {
   font-size: 14px;
   font-weight: bold;
 }
-
+p {
+  font-size: 14px;
+}
 .nom-card{
-  min-height: 200px;
+  display: inline-block;
+  width: 200px;
+  min-height: 150px;
+  vertical-align: top;
+}
+.nomination {
+  display: inline-block;
+  width: 150px;
+  min-height: 150px;
+  vertical-align: top;
+}
+.map {
+  width:100%
+}
+.modal-header{
+  background-color: #FDC02F;
+}
+.modal-title {
+  font-size: 1.2em;
+ }
+.modal-body-text{
+  font-size: 0.9em;
+}
+.eatmeet{
+  font-weight: 700;
+}
+.voteCount3{
+  background-color:#fdde94 ;
+  color: #fefdf9!important;
+  
+}
+.voteCount2{
+  background-color: #fdeabd;
+  color: #fefdf9!important;
+}
+.voteCount1{
+  background-color: #fefaef;
+  color: #fefdf9!important;
+}
+.winner-name{
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.winner-addr{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+.winner-url{
+  font-size: 1.1em;
+  font-weight: bold;
+  
 }
 
-#friends{
-  background-color: #ffc107;
-  padding-left: 10px;
+
+@media screen and (min-width: 1040px) and (max-width: 3000px) {
+  #app-tagline1 { display: inline-block; }  /* show it on large screens */
 }
+
+@media screen and (min-width: 0px) and (max-width: 1039px) {
+  #app-tagline1 { display: none;}   /* hide it elsewhere */
+}
+
+
