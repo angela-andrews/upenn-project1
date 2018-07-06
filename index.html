@@ -157,18 +157,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <!--google maps-->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9b9Lcgpr-ZiueQx8FYSpzNht4kZ00VqA
-		&callback=initMap">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9b9Lcgpr-ZiueQx8FYSpzNht4kZ00VqA"></script>
     </script>
     <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map-col'), {
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+        var map = new google.maps.Map(document.getElementById('map-col'), {
             zoom: 8,
             center: {lat: 39.9526, lng: -75.1652}
             });
-        }
-    </script>            
+    </script>
+             
        </body>
     </html>
 

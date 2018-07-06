@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyC6jLmPlZjP04JCO2LJGRwt_shJj4GWix4",
-    authDomain: "eat-meet.firebaseapp.com",
-    databaseURL: "https://eat-meet.firebaseio.com",
-    projectId: "eat-meet",
-    storageBucket: "",
-    messagingSenderId: "103168267880"
+    apiKey: "AIzaSyA4i5ckxWGzEVEOilXKbB_ABxGjEvslgYo",
+    authDomain: "andy-test-84135.firebaseapp.com",
+    databaseURL: "https://andy-test-84135.firebaseio.com",
+    projectId: "andy-test-84135",
+    storageBucket: "andy-test-84135.appspot.com",
+    messagingSenderId: "708656104378"
   };
 
   firebase.initializeApp(config);
@@ -29,6 +29,8 @@ var config = {
     var clientSecret = localStorage.getItem("storedSecret");
     var completedArray = [];
     var nominationArray = [];
+    var mapArray = [];
+    var mapTextGlobal = [];
     var winningName = "";
     var winningLoc = "";
     var winningUrl = "";
@@ -43,6 +45,7 @@ var config = {
     $("#cantVote").modal({ show: false});
     $("#cantNom").modal({ show: false});
 //////////////////////////
+
 
 // user must add credentials before search
 $("#credential-cog").on("click", function(event){
@@ -183,38 +186,53 @@ database.ref('nominations').on("child_added", function(snapshot) {
         canVote = true;
     }
     //////////////map pin to map//////////////
-        var geocoder = new google.maps.Geocoder;
-        var infowindow = new google.maps.InfoWindow;
-        var map = new google.maps.Map(document.getElementById('map-col'), {
-            zoom: 8,
-            center: {lat: 39.9526, lng: -75.1652}
-            });
+    var geocoder = new google.maps.Geocoder;
+    var infowindow = new google.maps.InfoWindow;
+    var map = new google.maps.Map(document.getElementById('map-col'), {
+        zoom: 8,
+        center: {lat: 39.9526, lng: -75.1652}
+        });
 
+        singlePtArray = [];
+        singlePtArray.push(sv.lat);
+        singlePtArray.push(sv.long);
+        mapArray.push(singlePtArray);
+
+        mapTextGlobal.push(sv.name);
+    var mapText = mapTextGlobal;
+
+    // var infoWindow = new google.maps.InfoWindow(), marker, i;
+    for(var z = 0; z<mapArray.length; z++){
         function geocodeLatLng(geocoder, map, infowindow) {
             
-            var latlng = {lat: parseFloat(sv.lat), lng: parseFloat(sv.long)};
+            var latlng = {lat: parseFloat(mapArray[z][0]), lng: parseFloat(mapArray[z][1])};
             geocoder.geocode({'location': latlng}, function(results, status) {
-              if (status === 'OK') {
+            if (status === 'OK') {
                 if (results[0]) {
-                  map.setZoom(11);
-                  var marker = new google.maps.Marker({
+                map.setZoom(11);
+                var marker = new google.maps.Marker({
                     position: latlng,
                     map: map
-                  });
-                  infowindow.setContent(results[0].formatted_address);
-                  infowindow.open(map, marker);
+                });
+                console.log(mapTextGlobal[0]);
+                console.log(z);
+                infowindow.setContent(mapText[z-1]);
+                infowindow.open(map, marker);
+                console.log(results[0]);
+
+                
                 } else {
-                  window.alert('No results found');
+                window.alert('No results found');
                 }
-              } else {
+            } else {
                 window.alert('Geocoder failed due to: ' + status);
-              }
+            }
             });
-          }
+        }
 
-          geocodeLatLng(geocoder, map, infowindow);
-
-});
+        geocodeLatLng(geocoder, map, infowindow);
+    }
+    });
 
 //////////////nominations are clicked, weighted voting occurs//////////////
 $(document).on("click", ".nomination", function(){
@@ -378,6 +396,11 @@ $(document).on("click", ".nomination", function(){
             winningLoc = transformedWinner.location;
             winningUrl = transformedWinner.url;
 
+
+            ///////////////////repop map with winner////////////////
+                
+
+
             $(".winner-addr").append(winningLoc);
             var preurl= "<a href='" + winningUrl + "'target='blank'>" + winningName+ "</a>";
             $(".winner-name").append(preurl);
@@ -448,10 +471,24 @@ $(document).on("click", ".nomination", function(){
             $(".winner-name").empty();
             $(".winner-addr").empty();
             $(".winner-url").empty();
+            $("#map-col").empty();
+
+            function mapRePop(){
+                var geocoder = new google.maps.Geocoder;
+                var infowindow = new google.maps.InfoWindow;
+                var map = new google.maps.Map(document.getElementById('map-col'), {
+                    zoom: 8,
+                    center: {lat: 39.9526, lng: -75.1652}
+            });
+            }
+
+            mapRePop();
 
             database.ref().set({
                 is: "empty"
             });
+      
+            
             /////calls reset for users connected so can continue/////
             setTimeout(resetConnections, 2000);
         }
