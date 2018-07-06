@@ -1,38 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Oleo+Script+Swash+Caps|Six+Caps');
 * {
   box-sizing: border-box;
   /* text-align: center; */
   /* background-color: green; */
 }
-
 .clearfix::after {
   content: "";
   clear: both;
   display: table;
   overflow: auto;
 }
-
+#app-name {
+  font-family: 'Six Caps', sans-serif;
+  font-size: 30px;
+}
+h7, #app-tagline1, #app-tagline2, #app-tagline3,  {
+  font-family: 'Macondo Swash Caps', cursive;
+}
+.form-group {
+  display: inline-block;
+}
+.form-control {
+  flex: 1;
+}
+#search-submit {
+ float: right;
+}
+.navbar {
+  display: flex;
+}
 #nom-col{
-  min-height: 350px;
+  min-height: 330px;
+  flex: 1;
 }
-
 #map-col{
-  min-height: 350px;
+  max-height: 330px;
+  width: 100%;
 }
-
-.nomP{
+.nomP, {
   font-size: 14px;
   font-weight: bold;
 }
-
+p {
+  font-size: 14px;
+}
 .nom-card{
-  min-height: 200px;
+  display: inline-block;
+  width: 200px;
+  min-height: 150px;
+  vertical-align: top;
 }
-
-#friends{
-  background-color: #ffc107;
-  padding-left: 10px;
+.nomination {
+  display: inline-block;
+  width: 150px;
+  min-height: 150px;
+  vertical-align: top;
 }
-
+.map {
+  width:100%
+}
 .modal-header{
   background-color: #FDC02F;
 }
@@ -46,7 +72,7 @@
   font-weight: 700;
 }
 .voteCount3{
-  background-color:#fdde94 ;
+  background-color:#fcd26d ;
   color: #fefdf9!important;
   
 }
@@ -58,11 +84,9 @@
   background-color: #fefaef;
   color: #fefdf9!important;
 }
-
 .winner-name{
   font-size: 1.3em;
   font-weight: bold;
-
 }
 .winner-addr{
   font-size: 1.1em;
@@ -73,16 +97,17 @@
   font-weight: bold;
   
 }
-#modal-input-id, #modal-input-secret{
-  font-size: 0.8em;
 
+#modal-input-id, #modal-input-secret{
+  font-size: 0.8 em;
 }
+
 .btn-primary{
   background-color: #ffc107;
   border: 0px;
   color: black;
-}
-.btn-primary:hover{
+ }
+ .btn-primary:hover{
   background-color: #ffc107;
   
-}
+ }
