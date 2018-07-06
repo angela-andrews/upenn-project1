@@ -4,6 +4,10 @@
   /* text-align: center; */
   /* background-color: green; */
 }
+
+body{
+  background: url(bg.jpg) yellow;
+}
 .clearfix::after {
   content: "";
   clear: both;
