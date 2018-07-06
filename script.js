@@ -1,13 +1,15 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyAW7bA6l1SKh_5cY1QA6B762FDhcLsGgvE",
-    authDomain: "q-test-app.firebaseapp.com",
-    databaseURL: "https://q-test-app.firebaseio.com",
-    projectId: "q-test-app",
-    storageBucket: "q-test-app.appspot.com",
-    messagingSenderId: "660859232414"
+    apiKey: "AIzaSyC6jLmPlZjP04JCO2LJGRwt_shJj4GWix4",
+    authDomain: "eat-meet.firebaseapp.com",
+    databaseURL: "https://eat-meet.firebaseio.com",
+    projectId: "eat-meet",
+    storageBucket: "",
+    messagingSenderId: "103168267880"
   };
+  
   firebase.initializeApp(config);
+
 
 
   //////////////////////////////////////////////////////
@@ -461,7 +463,7 @@ $(document).on("click", ".nomination", function(){
             var connectedRef = database.ref(".info/connected");
 
             // When the client's connection state changes...
-            connectedRef.on("value", function(snap){
+            connectedRef.once("value", function(snap){
                     if(snap.val()){
                         var con = connectionsRef.push(true);
                         // Remove user from the connection list when they disconnect.
@@ -469,7 +471,7 @@ $(document).on("click", ".nomination", function(){
                     }
 
             });
-            connectionsRef.on("value", function(snap){
+            connectionsRef.once("value", function(snap){
 
                     // The number of online users is the number of children in the connections list.
                     usersCurrent = snap.numChildren();
