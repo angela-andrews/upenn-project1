@@ -199,7 +199,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
         mapArray.push(singlePtArray);
 
         mapTextGlobal.push(sv.name);
-    var mapText = mapTextGlobal;
+        var mapText = mapTextGlobal;
 
     // var infoWindow = new google.maps.InfoWindow(), marker, i;
     for(var z = 0; z<mapArray.length; z++){
@@ -398,7 +398,37 @@ $(document).on("click", ".nomination", function(){
 
 
             ///////////////////repop map with winner////////////////
-                
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+            var map = new google.maps.Map(document.getElementById('map-col'), {
+                zoom: 8,
+                center: {lat: 39.9526, lng: -75.1652}
+            });
+
+            function geocodeLatLng(geocoder, map, infowindow) {
+            
+            var latlng = {lat: parseFloat(transformedWinner.lat), lng: parseFloat(transformedWinner.long)};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+              if (status === 'OK') {
+                if (results[0]) {
+                  map.setZoom(11);
+                  var marker = new google.maps.Marker({
+                    position: latlng,
+                    map: map
+                  });
+                  infowindow.setContent(results[0].formatted_address);
+                  infowindow.open(map, marker);
+                } else {
+                  window.alert('No results found');
+                }
+              } else {
+                window.alert('Geocoder failed due to: ' + status);
+              }
+            });
+          }
+
+          geocodeLatLng(geocoder, map, infowindow);
+
 
 
             $(".winner-addr").append(winningLoc);
@@ -460,6 +490,8 @@ $(document).on("click", ".nomination", function(){
             compiledArray = [];
             sortedArray = [];
             completedArray = [];
+            mapArray = [];
+            mapTextGlobal = [];
             winner = "";
             transformedWinner = "";
             nominationArray = [];
