@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Oleo+Script+Swash+Caps|Six+Caps');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|BioRhyme+Expanded');
 * {
   box-sizing: border-box;
   /* text-align: center; */
@@ -10,32 +10,61 @@
   display: table;
   overflow: auto;
 }
+
+#nav-info {
+  display:inline-block;
+}
 #app-name {
-  font-family: 'Six Caps', sans-serif;
+  font-family: 'BioRhyme Expanded', serif;
   font-size: 30px;
 }
-h7, #app-tagline1, #app-tagline2, #app-tagline3,  {
-  font-family: 'Macondo Swash Caps', cursive;
+a {
+  font-family: 'Montserrat', sans-serif;
 }
 .form-group {
   display: inline-block;
 }
-.form-control {
-  flex: 1;
+
+#currentUsers {
+  font-family: 'BioRhyme Expanded', serif;
 }
+
 #search-submit {
  float: right;
+ flex: 2;
+ width: 100%;
 }
+
 .navbar {
   display: flex;
 }
+
+
+#background {
+  background: url('eatmeet-background.jpg');
+  opacity:0.75;
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index:-1;
+}
+
+
 #nom-col{
   min-height: 330px;
   flex: 1;
 }
 #map-col{
-  max-height: 330px;
+  max-height: 300px;
   width: 100%;
+  position:relative;
+  bottom: 0px;
+  z-index: -1;
+  overflow: hidden;
 }
 .nomP, {
   font-size: 14px;
@@ -72,7 +101,7 @@ p {
   font-weight: 700;
 }
 .voteCount3{
-  background-color:#fcd26d ;
+  background-color:#fdde94 ;
   color: #fefdf9!important;
   
 }
@@ -98,16 +127,22 @@ p {
   
 }
 
-#modal-input-id, #modal-input-secret{
-  font-size: 0.8 em;
-}
-
 .btn-primary{
   background-color: #ffc107;
-  border: 0px;
-  color: black;
- }
- .btn-primary:hover{
-  background-color: #ffc107;
-  
- }
+ border: 0px;
+ color: black;
+}
+.btn-primary:hover{
+ background-color: #ffc107;
+ 
+}
+
+
+
+@media screen and (min-width: 1040px) and (max-width: 3000px) {
+  #app-tagline1 { display: inline-block; }  /* show it on large screens */
+}
+
+@media screen and (min-width: 0px) and (max-width: 1039px) {
+  #app-tagline1 { display: none;}   /* hide it elsewhere */
+}
