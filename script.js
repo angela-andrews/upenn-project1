@@ -7,7 +7,7 @@ var config = {
     storageBucket: "",
     messagingSenderId: "103168267880"
   };
-  
+
   firebase.initializeApp(config);
 
 
@@ -463,7 +463,7 @@ $(document).on("click", ".nomination", function(){
             var connectedRef = database.ref(".info/connected");
 
             // When the client's connection state changes...
-            connectedRef.once("value", function(snap){
+            connectedRef.on("value", function(snap){
                     if(snap.val()){
                         var con = connectionsRef.push(true);
                         // Remove user from the connection list when they disconnect.
@@ -471,7 +471,7 @@ $(document).on("click", ".nomination", function(){
                     }
 
             });
-            connectionsRef.once("value", function(snap){
+            connectionsRef.on("value", function(snap){
 
                     // The number of online users is the number of children in the connections list.
                     usersCurrent = snap.numChildren();
