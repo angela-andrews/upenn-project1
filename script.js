@@ -189,7 +189,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow;
     var map = new google.maps.Map(document.getElementById('map-col'), {
-        zoom: 8,
+        zoom: 13,
         center: {lat: 39.9526, lng: -75.1652}
         });
 
@@ -209,7 +209,7 @@ database.ref('nominations').on("child_added", function(snapshot) {
             geocoder.geocode({'location': latlng}, function(results, status) {
             if (status === 'OK') {
                 if (results[0]) {
-                map.setZoom(11);
+                map.setZoom(13);
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map
@@ -401,7 +401,7 @@ $(document).on("click", ".nomination", function(){
             var geocoder = new google.maps.Geocoder;
             var infowindow = new google.maps.InfoWindow;
             var map = new google.maps.Map(document.getElementById('map-col'), {
-                zoom: 8,
+                zoom: 13,
                 center: {lat: 39.9526, lng: -75.1652}
             });
 
@@ -411,7 +411,7 @@ $(document).on("click", ".nomination", function(){
             geocoder.geocode({'location': latlng}, function(results, status) {
               if (status === 'OK') {
                 if (results[0]) {
-                  map.setZoom(11);
+                  map.setZoom(13);
                   var marker = new google.maps.Marker({
                     position: latlng,
                     map: map
@@ -509,7 +509,7 @@ $(document).on("click", ".nomination", function(){
                 var geocoder = new google.maps.Geocoder;
                 var infowindow = new google.maps.InfoWindow;
                 var map = new google.maps.Map(document.getElementById('map-col'), {
-                    zoom: 8,
+                    zoom: 13,
                     center: {lat: 39.9526, lng: -75.1652}
             });
             }
