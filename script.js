@@ -1,11 +1,11 @@
 //////////////////FIREBASE SETUP/INIT//////////////////
 var config = {
-    apiKey: "AIzaSyA4i5ckxWGzEVEOilXKbB_ABxGjEvslgYo",
-    authDomain: "andy-test-84135.firebaseapp.com",
-    databaseURL: "https://andy-test-84135.firebaseio.com",
-    projectId: "andy-test-84135",
-    storageBucket: "andy-test-84135.appspot.com",
-    messagingSenderId: "708656104378"
+    apiKey: "AIzaSyC6jLmPlZjP04JCO2LJGRwt_shJj4GWix4",
+    authDomain: "eat-meet.firebaseapp.com",
+    databaseURL: "https://eat-meet.firebaseio.com",
+    projectId: "eat-meet",
+    storageBucket: "eat-meet.appspot.com",
+    messagingSenderId: "103168267880"
   };
 
   firebase.initializeApp(config);
@@ -75,7 +75,7 @@ $("#search-sub-btn").on("click", function(event){
     var keyword = '&query=' + input.val();
     //first call asks API for a list of restuarants within given geoloc
     $.ajax({
-        url:'https://api.foursquare.com/v2/venues/search?limit=1&' + clientId + '&' + clientSecret +'&v=20130815&near=Philadelphia' + keyword, 
+        url:'https://api.foursquare.com/v2/venues/search?limit=3&' + clientId + '&' + clientSecret +'&v=20130815&near=Philadelphia' + keyword, 
         dataType: 'json',
         
 }).then(function(response){

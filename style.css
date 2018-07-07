@@ -45,7 +45,7 @@ a {
 
 
 #background {
-  background: url('eatmeet-background.jpg');
+  background: url('images/eatmeet-background.jpg');
   opacity:0.75;
   position:absolute;
   top:0;
@@ -140,6 +140,9 @@ p {
  background-color: #ffc107;
  
 }
+#friends{
+  margin-left: 15px;
+}
 
 
 
@@ -149,4 +152,12 @@ p {
 
 @media screen and (min-width: 0px) and (max-width: 1039px) {
   #app-tagline1 { display: none;}   /* hide it elsewhere */
+}
+
+@media screen and (max-width: 640px){
+  #friends{ 
+    display: block;
+    margin-left: 0px;
+  }
+  #three-buttons{ display:inline-block; }
 }
