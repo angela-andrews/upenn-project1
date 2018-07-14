@@ -2,7 +2,7 @@
 
 EatMeet
 
-- A Javascript based application that allows users to search for restaurants around them and nominate their choice of restaurant for a vote among their group of friends to decide where they would be dining.
+- A Javascript based application that allows users to search for restaurants around them and nominate their choice of restaurant for a vote among their group of friends to decide where they would be dining. To use the app, You must register first at https://foursquare.com/developers/ to recieve your own Foursquare client ID and client secret. This service is free. Once you have registered, click the gear icon near the seach-bar and paste your Foursquare client ID and client secret. 
 
 - The application solves the issue of indecisiveness, when it comes to group dining, by allowing users to communicate their prefernces via the application and also providing a voting tool for them to reach a consensus. The app also pin points all the nominated restaurants on a map so users can see where each nomination is located. Therefore, eliminating the need for the often undersirable back and forth communication between a group when trying to decide where to dine.
 
@@ -29,3 +29,12 @@ EatMeet
      - Zelle/Venmo based payment feature to split the tab
      - Tip calculator
      - Map capability that generates distance to the restaurant and map out the route
+     
+     
+     Contributors to the Eat Meet project:
+     
+     https://github.com/angela-andrews
+     https://github.com/catlibwilk
+     https://github.com/robxroy
+     https://github.com/willcode4tacos
+     
