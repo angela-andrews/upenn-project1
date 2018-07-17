@@ -31,10 +31,8 @@ EatMeet
      - Map capability that generates distance to the restaurant and map out the route
      
      
-     Contributors to the Eat Meet project:
-     
-     https://github.com/angela-andrews
-     https://github.com/catlibwilk
-     https://github.com/robxroy
-     https://github.com/willcode4tacos
-     
+ - Contributors to the Eat Meet project:
+     - [Angela Andrews](https://github.com/angela-andrews)
+     - [Andrew Wilk]( https://github.com/catlibwilk)
+     - [Rob Roy]( https://github.com/robxroy) 
+     - [Hassaan Mustafa]( https://github.com/willcode4tacos)
