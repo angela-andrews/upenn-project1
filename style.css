@@ -79,12 +79,14 @@ p {
   width: 200px;
   min-height: 150px;
   vertical-align: top;
+  margin: 10px;
 }
 .nomination {
   display: inline-block;
   width: 150px;
   min-height: 150px;
   vertical-align: top;
+  margin: 10px;
 }
 .map {
   width:100%

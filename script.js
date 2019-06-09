@@ -64,6 +64,12 @@ $("#cred-submit-btn").on("click", function(event){
        
 })
 
+    ///////////// refresh after credentials are entered //////
+    $(document).ready(function(){
+        $("#cred-refresh-btn").click(function(){
+            location.reload(true);
+        });
+    });
 
 ////////////////function takes input search term, runs API calls, generates list of suggestions///////////////////////
 $("#search-sub-btn").on("click", function(event){
